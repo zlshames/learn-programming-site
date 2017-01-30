@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Invitee } from '../invitee'
 
 @Component({
@@ -6,7 +6,7 @@ import { Invitee } from '../invitee'
   templateUrl: './inviteform.component.html',
   styleUrls: ['./inviteform.component.css']
 })
-export class InviteformComponent implements OnInit {
+export class InviteformComponent {
 
   model: Invitee = new Invitee('','','','','')
   
@@ -36,9 +36,6 @@ export class InviteformComponent implements OnInit {
 
   constructor() { 
     this.formStep = 0
-  }
-
-  ngOnInit() {
   }
 
   formSubmit(): void {
