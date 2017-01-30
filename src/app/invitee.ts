@@ -7,7 +7,7 @@ export class Invitee {
     public skillLevel: string
   ) { }
 
-  public toString(): void {
-    console.log(`${this.name} is a ${this.position} in ${this.field}!`)
+  public toString(): string {
+    return `${this.name} is a ${this.position} in ${this.field}!`
   }
 }

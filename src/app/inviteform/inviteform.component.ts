@@ -8,8 +8,15 @@ import { Invitee } from '../invitee'
 })
 export class InviteformComponent {
 
+  formStep: number
+  errors: any = {
+      name: '',
+      email: '',
+      position: '',
+      field: '',
+      skillLevel: ''
+  }
   model: Invitee = new Invitee('','','','','')
-  
   positions: Array<string> = [
     'Student',
     'Employed',
@@ -17,7 +24,6 @@ export class InviteformComponent {
     'Freelancer',
     'Other'
   ]
-
   fields: Array<string> = [
     'Front-End',
     'Back-End',
@@ -25,29 +31,36 @@ export class InviteformComponent {
     'Mobile',
     'Other'
   ]
-
   skillLevels: Array<string> = [
     'Beginner',
     'Intermediate',
     'Advanced'
   ]
 
-  formStep: number
-
   constructor() { 
     this.formStep = 0
   }
 
   formSubmit(): void {
-    this.model.toString()
+    if(!this.model.position) {
+      this.errors.position = 'This field cannot be empty!'
+    } else if(!this.model.field) {
+      this.errors.field = 'This field cannot be empty!'
+    } else if(!this.model.skillLevel) {
+      this.errors.skillLevel = 'This field cannot be empty!'
+    } else {
+      console.log(this.model.toString())
+    }
   }
 
-  nextStep(): void {
-    this.formStep += 1
-  }
-
-  prevStep(): void {
-    this.formStep -= 1
+  stepTwo(): void {
+    if(!this.model.name) {
+      this.errors.name = 'This field cannot be empty!'
+    } else if(!this.model.email) {
+      this.errors.email = 'This field cannot be empty!'
+    } else {
+      this.formStep += 1
+    }
   }
 
 }
