@@ -3,7 +3,9 @@
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.26.
 
 ## Development server
+
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `yarn server` for the api dev server. This is needed to have hot reload for the front-end and api for the back-end. On production these will run on 1 port.
 
 ## Code scaffolding
 
@@ -12,6 +14,10 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+
+## Production server
+
+After running `ng build` you can run the `server:prod` script to have the express server run and serve the `dist/index.html` with ng2.
 
 ## Running unit tests
 
