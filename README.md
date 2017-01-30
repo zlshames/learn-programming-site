@@ -5,6 +5,7 @@ This project was generated with [angular-cli](https://github.com/angular/angular
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
 Run `yarn server` for the api dev server. This is needed to have hot reload for the front-end and api for the back-end. On production these will run on 1 port.
 
 ## Code scaffolding
