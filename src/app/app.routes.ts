@@ -5,5 +5,5 @@ import { InviteformComponent } from './inviteform/inviteform.component'
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'getinvite', component: InviteformComponent }
+  { path: 'invite', component: InviteformComponent }
 ]
