@@ -5,17 +5,37 @@
       <p>Fill out this short form and an invite will be sent to your email!</p>
 
       <form (submit)="formSubmit()">
-        <div class="form-group">
+        <div class="form-group" *ngIf="formStep === 0">
           <label for="name">Your name</label>
-          <input type="text" [(ngModel)]="name" name="name" placeholder="Name" class="form-control"/>
+          <input type="text" [(ngModel)]="model.name" name="name" placeholder="Name" class="form-control"/>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" *ngIf="formStep === 0">
           <label for="email">Your email</label>
-          <input type="text" [(ngModel)]="email" name="name" placeholder="E-Mail" class="form-control"/>
+          <input type="email" [(ngModel)]="model.email" name="name" placeholder="E-Mail" class="form-control"/>
+          <button class="btn btn-sm" (click)="nextStep()">Next</button>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block">Get invite!</button>
+        <div class="form-group" *ngIf="formStep === 1">
+          <label for="position">Your position</label>
+          <select [(ngModel)]="model.position" name="position">
+            <option *ngFor="let position of positions" value="{{ position | lowercase }}">{{ position }}</option>
+          </select>
+        </div>
+        <div class="form-group" *ngIf="formStep === 1">
+          <label for="field">Your field</label>
+          <select [(ngModel)]="model.field" name="field">
+            <option *ngFor="let field of fields" value="{{ field | lowercase }}">{{ field }}</option>
+          </select>
+        </div>
+        <div class="form-group" *ngIf="formStep === 1">
+          <label for="skillLevel">Your skill level</label>
+          <select [(ngModel)]="model.skillLevel" name="skillLevel">
+            <option *ngFor="let skillLevel of skillLevels" value="{{ skillLevel | lowercase }}">{{ skillLevel }}</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" *ngIf="formStep === 1">Get invite!</button>
       </form>
       <p class="text-center home-link"><a [routerLink]="['']">Go home</a></p>
     </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Invitee } from '../invitee'
 
 @Component({
   selector: 'app-inviteform',
@@ -7,16 +8,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InviteformComponent implements OnInit {
 
-  name: string = ''
-  email: string = ''
+  model: Invitee = new Invitee('','','','','')
+  
+  positions: Array<string> = [
+    'Student',
+    'Employed',
+    'Contracter',
+    'Freelancer',
+    'Other'
+  ]
 
-  constructor() { }
+  fields: Array<string> = [
+    'Front-End',
+    'Back-End',
+    'Full-Stack',
+    'Mobile',
+    'Other'
+  ]
+
+  skillLevels: Array<string> = [
+    'Beginner',
+    'Intermediate',
+    'Advanced'
+  ]
+
+  formStep: number
+
+  constructor() { 
+    this.formStep = 0
+  }
 
   ngOnInit() {
   }
 
   formSubmit(): void {
-    console.log(`email: ${this.email}, name: ${this.name}`)
+    this.model.toString()
+  }
+
+  nextStep(): void {
+    this.formStep += 1
+  }
+
+  prevStep(): void {
+    this.formStep -= 1
   }
 
 }
