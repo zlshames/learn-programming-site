@@ -8,6 +8,12 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 Run `yarn server` for the api dev server. This is needed to have hot reload for the front-end and api for the back-end. On production these will run on 1 port.
 
+## Contributing
+
+We follow the basic fork -> clone -> branch contribution workflow.
+
+Pull requests are only accepted into the `development` branch.
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
