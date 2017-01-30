@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "server:prod": "babel-node server.js",
-    "server": "nodemon --exec babel-node server.js --watch server/",
+    "server": "nodemon --exec babel-node server.js --watch http/",
     "start": "ng serve",
     "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json --type-check && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json --type-check",
     "test": "ng test",
