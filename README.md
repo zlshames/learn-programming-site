@@ -2,7 +2,16 @@
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.26.
 
+## Major Dependencies
+
+- MySQL
+- NodeJS v. ^6.*.*
+
 ## Development server
+
+Copy `config.example.js` to `config.js` and change the database details to your database.
+
+Run `knex migrate:latest` to get database setup for development.
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
