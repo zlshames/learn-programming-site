@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row u-vertcenter-container">
+    <div class="col-md-4 col-md-offset-4">
+      <h4>Get Your Invite!</h4>
+      <p>Fill out this short form and an invite will be sent to your email!</p>
+
+      <form (submit)="formSubmit()">
+        <div class="form-group">
+          <label for="name">Your name</label>
+          <input type="text" [(ngModel)]="name" name="name" placeholder="Name" class="form-control"/>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Your email</label>
+          <input type="text" [(ngModel)]="email" name="name" placeholder="E-Mail" class="form-control"/>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Get invite!</button>
+      </form>
+      <p class="text-center home-link"><a [routerLink]="['']">Go home</a></p>
+    </div>
+  </div>
+</div>
