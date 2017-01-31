@@ -4,7 +4,7 @@ export class Invitee {
     public email: string,
     public position: string,
     public field: string,
-    public skillLevel: string
+    public skill_level: string
   ) { }
 
   public toString(): string {

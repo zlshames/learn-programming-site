@@ -13,16 +13,16 @@ class MainController {
   }
 
   static newInvite(req, res) {
-    const invitee = req.body
+    const invitee = req.body.invitee
     req.knex('invitees').insert({ 
       name: invitee.name,
       email: invitee.email,
       position: invitee.position,
-      skill_level: invitee.skillLevel,
+      skill_level: invitee.skill_level,
       field: invitee.field
     })
     .then(response => {
-      console.log(response)
+      res.status(200).json({ message: 'Invite added successfully!' })
     })
   }
 }

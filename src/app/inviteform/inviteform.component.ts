@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router'
 import * as _ from 'lodash'
 import { Invitee } from '../invitee'
+import { InviteformService } from '../inviteform.service'
 
 @Component({
   selector: 'app-inviteform',
   templateUrl: './inviteform.component.html',
-  styleUrls: ['./inviteform.component.css']
+  styleUrls: ['./inviteform.component.css'],
+  providers: [InviteformService]
 })
 export class InviteformComponent {
 
@@ -27,13 +29,13 @@ export class InviteformComponent {
     'Mobile',
     'Other'
   ]
-  skillLevels: Array<string> = [
+  skill_levels: Array<string> = [
     'Beginner',
     'Intermediate',
     'Advanced'
   ]
 
-  constructor(private router: Router) { 
+  constructor(private router: Router, private inviteService: InviteformService) { 
     this.formStep = 0
   }
 
@@ -44,8 +46,8 @@ export class InviteformComponent {
     if(!this.model.field) {
       this.errors.field = 'This field cannot be empty!'
     }
-    if(!this.model.skillLevel) {
-      this.errors.skillLevel = 'This field cannot be empty!'
+    if(!this.model.skill_level) {
+      this.errors.skill_level = 'This field cannot be empty!'
     }
     if(!this.model.name) {
       this.errors.name = 'This field cannot be empty!'
@@ -59,7 +61,9 @@ export class InviteformComponent {
 
   formSubmit(): void {
     if(this.isValid()) {
-      console.log(this.model.toString())
+      console.log('isValid')
+      this.inviteService.postInvitee(this.model)
+        .subscribe(res => console.log(res))
       this.router.navigate(['success'])
     }
   }

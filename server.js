@@ -29,6 +29,14 @@ app.use((req, res, next) => {
   }
 })
 
+// Allow CORS for development
+app.use((req, res, next)  => {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
+})
+
 // App routes
 // Pass knex so the controller can use database
 require('./http/routes')(app)
