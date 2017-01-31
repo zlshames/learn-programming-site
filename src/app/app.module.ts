@@ -9,12 +9,14 @@ import { routes } from './app.routes';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { InviteformComponent } from './inviteform/inviteform.component';
+import { SuccessComponent } from './success/success.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    InviteformComponent
+    InviteformComponent,
+    SuccessComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

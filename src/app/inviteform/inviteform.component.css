@@ -1,3 +1,17 @@
 .home-link {
   margin-top: 10px;
 }
+.form-control {
+  border: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+select.form-control {
+  border-radius: 0;
+}
+
+.form-control:focus {
+  border-bottom: 1px solid rgba(0,0,0,0.6);
+}

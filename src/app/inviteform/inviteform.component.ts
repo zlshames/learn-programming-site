@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router'
+import * as _ from 'lodash'
 import { Invitee } from '../invitee'
 
 @Component({
@@ -9,13 +11,7 @@ import { Invitee } from '../invitee'
 export class InviteformComponent {
 
   formStep: number
-  errors: any = {
-      name: '',
-      email: '',
-      position: '',
-      field: '',
-      skillLevel: ''
-  }
+  errors: any = {}
   model: Invitee = new Invitee('','','','','')
   positions: Array<string> = [
     'Student',
@@ -37,29 +33,34 @@ export class InviteformComponent {
     'Advanced'
   ]
 
-  constructor() { 
+  constructor(private router: Router) { 
     this.formStep = 0
   }
 
-  formSubmit(): void {
+  isValid(): Boolean {
     if(!this.model.position) {
       this.errors.position = 'This field cannot be empty!'
-    } else if(!this.model.field) {
-      this.errors.field = 'This field cannot be empty!'
-    } else if(!this.model.skillLevel) {
-      this.errors.skillLevel = 'This field cannot be empty!'
-    } else {
-      console.log(this.model.toString())
     }
-  }
-
-  stepTwo(): void {
+    if(!this.model.field) {
+      this.errors.field = 'This field cannot be empty!'
+    }
+    if(!this.model.skillLevel) {
+      this.errors.skillLevel = 'This field cannot be empty!'
+    }
     if(!this.model.name) {
       this.errors.name = 'This field cannot be empty!'
-    } else if(!this.model.email) {
+    }
+    if(!this.model.email) {
       this.errors.email = 'This field cannot be empty!'
-    } else {
-      this.formStep += 1
+    }
+
+    return _.isEmpty(this.errors)
+  }
+
+  formSubmit(): void {
+    if(this.isValid()) {
+      console.log(this.model.toString())
+      this.router.navigate(['success'])
     }
   }
 
