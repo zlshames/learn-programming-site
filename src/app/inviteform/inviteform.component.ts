@@ -62,9 +62,16 @@ export class InviteformComponent {
   formSubmit(): void {
     if(this.isValid()) {
       console.log('isValid')
-      this.inviteService.postInvitee(this.model)
-        .subscribe(res => console.log(res))
-      this.router.navigate(['success'])
+      this.inviteService.sendSlackInvite(this.model.email)
+        .subscribe(res => {
+          if(res.okay === true) {
+            this.inviteService.postInvitee(this.model)
+              .subscribe(res => console.log(res))
+            this.router.navigate(['success'])
+          } else {
+            this.errors.email = `Slack Error: '${res.error}'`
+          }
+        })
     }
   }
 

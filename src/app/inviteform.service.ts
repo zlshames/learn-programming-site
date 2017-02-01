@@ -9,19 +9,30 @@ import { Invitee } from './invitee'
 export class InviteformService {
 
   private apiURL: string = '/api/v1'
+  private slackToken: string
+  private slackHost: string
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) { 
+    this.slackToken = 'xoxp-133113936981-133716968327-135202434869-282927558aef66b633b3e27a9cb5c748'
+    this.slackHost = 'barracudainc'
+  }
 
   postInvitee(invitee: Invitee): Observable<Invitee> {
     return this.http.post(`${this.apiURL}/newinvite`, { invitee })
       .map(this.extractData)
       .catch(this.handleError)
-
   }
 
-  private extractData(res: Response) {
+  sendSlackInvite(email: string) {
+    return this.http.get(`https://${this.slackHost}.slack.com/api/users.admin.invite?token=${this.slackToken}&email=${email}`)
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+
+  private extractData(res: Response): Object {
     let body = res.json();
-    return body.message || { };
+    console.log(body)
+    return body.message || body || { };
   }
 
   private handleError (error: Response | any) {
