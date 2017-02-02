@@ -13,6 +13,7 @@ import { InviteformService } from '../inviteform.service'
 export class InviteformComponent {
 
   formStep: number
+  captchaVerified: boolean
   errors: any = {}
   model: Invitee = new Invitee('','','','','')
   positions: Array<string> = [
@@ -37,6 +38,7 @@ export class InviteformComponent {
 
   constructor(private router: Router, private inviteService: InviteformService) { 
     this.formStep = 0
+    this.captchaVerified = false
   }
 
   isValid(): Boolean {
@@ -59,9 +61,12 @@ export class InviteformComponent {
     return _.isEmpty(this.errors)
   }
 
+  resolved(captchaReponse: string) {
+    this.captchaVerified = true
+  }
+
   formSubmit(): void {
-    if(this.isValid()) {
-      console.log('isValid')
+    if(this.isValid() && this.captchaVerified) {
       this.inviteService.sendSlackInvite(this.model.email)
         .subscribe(res => {
           if(res.okay === true) {

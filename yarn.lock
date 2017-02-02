@@ -74,6 +74,10 @@
     magic-string "^0.16.0"
     source-map "^0.5.6"
 
+"@types/grecaptcha@^2.0.31":
+  version "2.0.31"
+  resolved "https://registry.yarnpkg.com/@types/grecaptcha/-/grecaptcha-2.0.31.tgz#a73d914c1aeead106c94f14cf367def9b98974af"
+
 "@types/jasmine@2.5.38", "@types/jasmine@^2.5.36":
   version "2.5.38"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.38.tgz#a4379124c4921d4e21de54ec74669c9e9b356717"
@@ -3953,6 +3957,10 @@ nested-error-stacks@^1.0.0:
   resolved "https://registry.yarnpkg.com/nested-error-stacks/-/nested-error-stacks-1.0.2.tgz#19f619591519f096769a5ba9a86e6eeec823c3cf"
   dependencies:
     inherits "~2.0.1"
+
+ng2-recaptcha@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/ng2-recaptcha/-/ng2-recaptcha-1.5.3.tgz#c5a4406a69eadf00f2e04ce4eba1bea2cfe9a011"
 
 no-case@^2.2.0:
   version "2.3.1"

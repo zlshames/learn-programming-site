@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { RecaptchaModule } from 'ng2-recaptcha';
 
 import { routes } from './app.routes';
 
@@ -20,6 +21,7 @@ import { SuccessComponent } from './success/success.component';
   ],
   imports: [
     RouterModule.forRoot(routes),
+    RecaptchaModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule

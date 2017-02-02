@@ -36,8 +36,11 @@
               </select>
             </div>
           </div>
+          <div class="form-group col-xs-4">
+            <recaptcha (resolved)="resolved($event)" siteKey="6LcxDBQUAAAAALcBuTYzOTtqdKaUEeknF0pqx4s-"></recaptcha>
+          </div>
 
-          <button type="submit" class="btn btn-primary btn-block">Get invite!</button>
+          <button type="submit" class="btn btn-primary btn-block btn-captcha" *ngIf="captchaVerified">Get invite!</button>
       </form>
     </div>
   </div>
