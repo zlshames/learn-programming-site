@@ -3,8 +3,8 @@
 import path from 'path'
 import superagent from 'superagent'
 
-const slackToken = 'xoxp-23422193668-23575903587-136212730436-f533622e507f0bcf43feda8398b0c1a3'
-const slackHost = 'learn-programming'
+import JRes from '../utils/JResponse'
+import cfg from '../utils/config'
 
 class MainController {
 	static index(request, response) {
@@ -20,23 +20,21 @@ class MainController {
 		const invitee = request.body.invitee
 
 		superagent
-			.get(`https://slack.com/api/users.admin.invite?token=${ slackToken }&email=${ invitee.email }`)
+			.get(`https://slack.com/api/users.admin.invite?token=${ cfg.slackToken }&email=${ invitee.email }`)
 			.end((err, res) => {
 				if (err) {
 					console.log(err)
-					return response.status(400).json({
-						success: false,
-						error: err.message
-					})
+					return response.status(400).json(
+						JRes.failure(err.message)
+					)
 				}
 
 				const slackRes = JSON.parse(res.text)
 
 				if (!slackRes.ok) {
-					return response.status(400).json({
-						success: false,
-						error: (slackRes.error) ? slackRes.error : 'Unknown error'
-					})
+					return response.status(400).json(
+						JRes.failure((slackRes.error) ? slackRes.error : 'Unknown error')
+					)
 				}
 
 				request.knex('invitees').insert({
@@ -53,10 +51,9 @@ class MainController {
 					console.log(`A database error occured: ${ error }`)
 				})
 
-				return response.status(200).json({
-					success: true,
-					error: 'Successfully sent invite'
-				})
+				return response.status(200).json(
+					JRes.success('Invite successfully sent')
+				)
 			})
 	}
 }

@@ -8,6 +8,17 @@
   box-shadow: none;
 }
 
+.centered {
+  margin: 0 auto;
+}
+
+.captcha-center {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0 !important;
+  margin-top: 5px;
+}
+
 select.form-control {
   border-radius: 0;
 }
