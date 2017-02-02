@@ -12,7 +12,7 @@ class MainController {
 	}
 
 	static showInvitee(request, response) {
-		req.knex.select('*').from('invitees')
+		request.knex.select('*').from('invitees')
 			.then(data => response.json(data))
 	}
 
@@ -47,10 +47,10 @@ class MainController {
 					field: invitee.field
 				})
 				.then(dbRes => {
-					console.log(dbRes)
+					console.log(`Saves invitee: ${ invitee.email }`)
 				})
 				.catch(error => {
-					console.log(error)
+					console.log(`A database error occured: ${ error }`)
 				})
 
 				return response.status(200).json({
