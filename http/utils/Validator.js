@@ -3,9 +3,9 @@
 class Validator {
 	static checkSkill(skill) {
 		const fields = [
-			'Beginner',
-			'Intermediate',
-			'Advanced'
+			'beginner',
+			'intermediate',
+			'advanced'
 		]
 
 		if (skill == null) {
@@ -17,27 +17,28 @@ class Validator {
 
 	static checkField(field) {
 		const fields = [
-			'Front-End',
-			'Back-End',
-			'Full-Stack',
-			'Mobile',
-			'Other'
+			'front-end',
+			'back-end',
+			'full-stack',
+			'mobile',
+			'other'
 		]
 
 		if (field == null) {
 			return false
 		}
 
+		console.log(field)
 		return fields.includes(field)
 	}
 
 	static checkPosition(position) {
 		const fields = [
-			'Student',
-			'Employed',
-			'Contractor',
-			'Freelancer',
-			'Other'
+			'student',
+			'employed',
+			'contractor',
+			'freelancer',
+			'other'
 		]
 
 		if (position == null) {

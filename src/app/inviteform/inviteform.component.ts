@@ -70,7 +70,7 @@ export class InviteformComponent {
       this.inviteService.sendSlackInvite(this.model)
         .subscribe(
           res => this.router.navigate(['success']),
-          err => this.router.navigate(['error'])
+          err => this.errors.email = `Error: ${err}`
         )
     }
   }
