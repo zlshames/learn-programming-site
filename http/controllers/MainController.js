@@ -22,7 +22,6 @@ class MainController {
 
 		// Validate Field
 		if (!Validator.checkField(invitee.field)) {
-			console.log(invitee.field)
 			return response.status(400).json(
 				JRes.failure('Invalid Field')
 			)
