@@ -28,7 +28,6 @@ class Validator {
 			return false
 		}
 
-		console.log(field)
 		return fields.includes(field)
 	}
 
