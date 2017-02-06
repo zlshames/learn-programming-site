@@ -18,31 +18,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'dist')))
 
 // Express Middleware
-app.use((error, req, res, next) => {
-	try {
-		// Bootstrap DB connection to request
-		req.knex = knex
-		// Go to next route
-		if (error instanceof SyntaxError) {
-			res.json('Please send only valid JSON')
-		} else {
-			next()
-		}
-	} catch (ex) {
-		res.json('An error has occured')
-	}
-})
-
-// // Allow CORS for development
-// app.use((req, res, next)  => {
-//   res.header("Access-Control-Allow-Origin", "*")
-//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-//   next()
-// })
+require('./http/middleware')(app, knex)
 
 // App routes
-// Pass knex so the controller can use database
 require('./http/routes')(app)
 
 // Start server
