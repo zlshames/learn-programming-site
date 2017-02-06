@@ -2,6 +2,8 @@
 
 import path from 'path'
 import superagent from 'superagent'
+import isEmail from 'validator/lib/isEmail'
+import striptags from 'striptags'
 
 import JRes from '../utils/JResponse'
 import cfg from '../utils/config'
@@ -18,24 +20,45 @@ class MainController {
 	}
 
 	static createInvitee(request, response) {
-		const invitee = request.body.invitee
+		let name = request.body.invitee.name.trim()
+		const email = request.body.invitee.email.trim()
+		const field = request.body.invitee.field.trim()
+		const position = request.body.invitee.position.trim()
+		const skill_level = request.body.invitee.skill_level.trim()
+
+		// Strip tags
+		name = striptags(name)
+
+		// Validate name
+		if (Validator.hasInjection(name)) {
+			return response.status(400).json(
+				JRes.failure('No injections plz')
+			)
+		}
+
+		// Check email
+		if (!isEmail(email)) {
+			return response.status(400).json(
+				JRes.failure('Invalid Email')
+			)
+		}
 
 		// Validate Field
-		if (!Validator.checkField(invitee.field)) {
+		if (!Validator.checkField(field)) {
 			return response.status(400).json(
 				JRes.failure('Invalid Field')
 			)
 		}
 
 		// Validate Position
-		if (!Validator.checkPosition(invitee.position)) {
+		if (!Validator.checkPosition(position)) {
 			return response.status(400).json(
 				JRes.failure('Invalid Position')
 			)
 		}
 
 		// Validate Skill
-		if (!Validator.checkSkill(invitee.skill_level)) {
+		if (!Validator.checkSkill(skill_level)) {
 			return response.status(400).json(
 				JRes.failure('Invalid Skill Level')
 			)
@@ -43,7 +66,7 @@ class MainController {
 
 		// Send Invite Request to Slack API
 		superagent
-			.get(`https://slack.com/api/users.admin.invite?token=${ cfg.slackToken }&email=${ invitee.email }`)
+			.get(`https://slack.com/api/users.admin.invite?token=${ cfg.slackToken }&email=${ email }`)
 			.end((err, res) => {
 				// Return error from Slack
 				if (err) {
@@ -63,16 +86,16 @@ class MainController {
 
 				// If success, add user to database
 				request.knex('invitees').insert({
-					name: invitee.name,
-					email: invitee.email,
-					position: invitee.position,
-					skill_level: invitee.skill_level,
-					field: invitee.field,
+					name: name,
+					email: email,
+					position: position,
+					skill_level: skill_level,
+					field: field,
 					created_at: new Date(),
 					updated_at: new Date()
 				})
 				.then(dbRes => {
-					console.log(`Saved invitee: ${ invitee.email }`)
+					console.log(`Saved invitee: ${ email }`)
 				})
 				.catch(error => {
 					console.log(`A database error occured: ${ error }`)
