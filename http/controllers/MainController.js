@@ -85,21 +85,25 @@ class MainController {
 				}
 
 				// If success, add user to database
-				request.knex('invitees').insert({
-					name: name,
-					email: email,
-					position: position,
-					skill_level: skill_level,
-					field: field,
-					created_at: new Date(),
-					updated_at: new Date()
-				})
-				.then(dbRes => {
-					console.log(`Saved invitee: ${ email }`)
-				})
-				.catch(error => {
-					console.log(`A database error occured: ${ error }`)
-				})
+				try {
+					request.knex('invitees').insert({
+						name: name,
+						email: email,
+						position: position,
+						skill_level: skill_level,
+						field: field,
+						created_at: new Date(),
+						updated_at: new Date()
+					})
+					.then(dbRes => {
+						console.log(`Saved invitee: ${ email }`)
+					})
+					.catch(error => {
+						console.log(`A database error occured: ${ error }`)
+					})
+				} catch (ex) {
+					console.log(`Unknown DB exception: ${ ex.message }`)
+				}
 
 				// Return success
 				return response.status(200).json(
