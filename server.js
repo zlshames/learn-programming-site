@@ -18,15 +18,19 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'dist')))
 
 // Express Middleware
-app.use((req, res, next) => {
-  try {
-    // Bootstrap DB connection to request
-    req.knex = knex
-    // Go to next routte
-    next()
-  } catch (ex) {
-    res.json('An error has occured')
-  }
+app.use((error, req, res, next) => {
+	try {
+		// Bootstrap DB connection to request
+		req.knex = knex
+		// Go to next route
+		if (error instanceof SyntaxError) {
+			res.json('Please send only valid JSON')
+		} else {
+			next()
+		}
+	} catch (ex) {
+		res.json('An error has occured')
+	}
 })
 
 // // Allow CORS for development
@@ -44,5 +48,5 @@ require('./http/routes')(app)
 // Start server
 const port = process.env.PORT || 3000
 app.listen(port, (err) => {
-  console.log(`App listening on http://localhost:${ port }`)
+	console.log(`App listening on http://localhost:${ port }`)
 })
