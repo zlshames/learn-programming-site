@@ -1,6 +1,38 @@
 'use strict'
 
+import isEmail from 'validator/lib/isEmail'
+import JRes from './JResponse'
+
 class Validator {
+	static validateInvitee(invitee) {
+		// Validate name
+		if (this.hasInjection(invitee.name)) {
+			return JRes.failure('No injections plz')
+		}
+
+		// Check email
+		if (!isEmail(invitee.email)) {
+			return JRes.failure('Invalid Email')
+		}
+
+		// Validate Field
+		if (!this.checkField(invitee.field)) {
+			return JRes.failure('Invalid Field')
+		}
+
+		// Validate Position
+		if (!this.checkPosition(invitee.position)) {
+			return JRes.failure('Invalid Position')
+		}
+
+		// Validate Skill
+		if (!this.checkSkill(invitee.skill_level)) {
+			return JRes.failure('Invalid Skill Level')
+		}
+
+		return { success: true }
+	}
+
 	static hasInjection(str) {
 		// Check for drop table
 		if (str.toLowerCase().indexOf('drop table') > -1) {
