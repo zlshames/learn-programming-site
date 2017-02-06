@@ -18,29 +18,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'dist')))
 
 // Express Middleware
-
-// Catch errors
-app.use((error, req, res, next) => {
-	if (error instanceof SyntaxError) {
-		res.json('Please send only valid JSON')
-	} else {
-		next()
-	}
-})
-// Bootstrap knex
-app.use((req, res, next) => {
-	try {
-		// Bootstrap DB connection to request
-		req.knex = knex
-		// Go to next route
-		next()
-	} catch (ex) {
-		res.json('An error has occured')
-	}
-})
+require('./http/middleware')(app, knex)
 
 // App routes
-// Pass knex so the controller can use database
 require('./http/routes')(app)
 
 // Start server
