@@ -1,6 +1,7 @@
 'use strict'
 
-class InviteeRepository {
+class Invitee {
+	
 	static create(knex, invitee) {
 		try {
 			knex('invitees').insert({
@@ -24,4 +25,4 @@ class InviteeRepository {
 	}
 }
 
-export default InviteeRepository
+export default Invitee

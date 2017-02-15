@@ -2,15 +2,13 @@
 
 // Import node modules
 import path from 'path'
-import superagent from 'superagent'
-import striptags from 'striptags'
 
 // Import utilities
 import Validator from '../utils/Validator'
 import Api from '../utils/Api'
 
-// Import repositories
-import InviteeRepo from '../repositories/InviteeRepository'
+// Import models
+import Invitee from '../models/Invitee'
 
 class MainController {
 	/**
@@ -46,7 +44,7 @@ class MainController {
 		const slackRes = yield Api.sendSlackInvite(invitee.email.trim())
 		if (slackRes.success) {
 			status = 200
-			InviteeRepo.create(request.knex, invitee)
+			Invitee.create(request.knex, invitee)
 		}
 
 		// Return response

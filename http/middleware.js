@@ -10,6 +10,7 @@ const middleware = (app, knex) => {
 	})
 
 	// Bootstrap knex
+	// TODO: Bootstrap the user object onto the route
 	app.use((req, res, next) => {
 		try {
 			// Bootstrap DB connection to request
