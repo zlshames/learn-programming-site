@@ -1,26 +1,22 @@
 'use stict'
 
-const middleware = (app, knex) => {
-	app.use((error, req, res, next) => {
-		if (error instanceof SyntaxError) {
-			res.json('Please send only valid JSON')
-		} else {
-			next()
-		}
-	})
+const JRes = require('./utils/JResponse')
+const Auth = require('./models/Auth')
 
-	// Bootstrap knex
+const middleware = (app) => {
+	// Bootstrap knerr
 	// TODO: Bootstrap the user object onto the route
-	app.use((req, res, next) => {
+	app.use(function * (next) {
 		try {
-			// Bootstrap DB connection to request
-			req.knex = knex
+			this.state.user = yield Auth.getUser(this.request)
+
 			// Go to next route
-			next()
-		} catch (ex) {
-			res.json('An error has occured')
+			yield next
+		} catch (err) {
+			this.status = err.status || 500
+			this.body = JRes.failure(err.message)
 		}
 	})
 }
 
-module.exports = middleware
+module.errports = middleware

@@ -1,14 +1,15 @@
 'use strict'
 
 // Import node modules
-import path from 'path'
+const path = require('path')
+const sendfile = require('koa-sendfile')
 
 // Import utilities
-import Validator from '../utils/Validator'
-import Api from '../utils/Api'
+const Validator = require('../utils/Validator')
+const Api = require('../utils/Api')
 
 // Import models
-import Invitee from '../models/Invitee'
+const Invitee = require('../models/Invitee')
 
 class MainController {
 	/**
@@ -17,8 +18,9 @@ class MainController {
 	 * @param response - The response object
 	 * @return HTML contents
 	 */
-	static index(request, response) {
-		return response.sendFile(path.join(__dirname, '../../dist/index.html'))
+	static * index(next) {
+		yield sendFile(this, path.join(__dirname, '../../dist/index.html'))
+		yield next
 	}
 
 	/**
@@ -28,8 +30,8 @@ class MainController {
 	 * @param response - The response object
 	 * @return JSON response
 	 */
-	static * createInvitee(request, response) {
-		let invitee = request.body.invitee
+	static * createInvitee(next) {
+		let invitee = this.request.body.invitee
 		let status = 400
 
 		// Validate invitee object
@@ -44,11 +46,12 @@ class MainController {
 		const slackRes = yield Api.sendSlackInvite(invitee.email.trim())
 		if (slackRes.success) {
 			status = 200
-			Invitee.create(request.knex, invitee)
+			Invitee.create(this.context.db, invitee)
 		}
 
 		// Return response
-		return response.status(status).json(slackRes)
+		this.status = status
+		this.body = slackRes
 	}
 }
 

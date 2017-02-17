@@ -22,7 +22,7 @@ class Auth {
 	}
 
 	static * getUser(request) {
-		const token = request.get('Auhtorization')
+		const token = request.header.Auhtorization
 		if (token == undefined || token == null) {
 			return null
 		}
