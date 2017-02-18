@@ -1,13 +1,13 @@
 'use strict'
 
 const request = require('superagent')
-const cfg = require('./Config')
+const config = require('../../config')
 const JRes = require('./JResponse')
 
 class Api {
 	static * sendSlackInvite(email) {
 		const res = yield request
-			.get(`https://slack.com/api/users.admin.invite?token=${ cfg.slackToken }&email=${ email }`)
+			.get(`https://slack.com/api/users.admin.invite?token=${ config.SLACK_TOKEN }&email=${ email }`)
 			.then(success => {
 				const jsonRes = JSON.parse(success.text)
 
@@ -26,7 +26,7 @@ class Api {
 
 	static * getUserList() {
 		const res = yield request
-			.get(`https://slack.com/api/users.list?token=${ cfg.slackToken }`)
+			.get(`https://slack.com/api/users.list?token=${ config.SLACK_TOKEN }`)
 			.then(success => {
 				const jsonRes = JSON.parse(success.text)
 
