@@ -1,10 +1,10 @@
 'use strict'
 
 class Invitee {
-	
-	static create(knex, invitee) {
+
+	static * create(db, invitee) {
 		try {
-			knex('invitees').insert({
+			yield db('invitees').insert({
 				name: invitee.name.trim(),
 				email: invitee.email.trim(),
 				position: invitee.position.trim(),
@@ -25,4 +25,4 @@ class Invitee {
 	}
 }
 
-export default Invitee
+module.exports = Invitee

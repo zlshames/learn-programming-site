@@ -2,14 +2,18 @@
 
 const bcrypt = require('bcrypt')
 
+const JRes = require('../utils/JResponse')
+
 class Auth {
-	static * login(knex, email, password) {
-		let user = yield knex('users')
-			.first('email', email.trim())
+	static * login(db, email, password) {
+		let user = yield db('users')
+			.select()
+			.where('email', email)
+			.first(['password', 'api_token'])
 			.then(row => { return row })
 			.catch(error => { return null })
 
-		if (user == null) {
+		if (user == undefined || user == null) {
 			return JRes.failure('No account associated with the email')
 		}
 
@@ -21,16 +25,22 @@ class Auth {
 		return JRes.success('Successfully logged in', { token: user.api_token })
 	}
 
-	static * getUser(request) {
-		const token = request.header.Auhtorization
+	static * getUser(ctx) {
+		const token = ctx.request.get('Authorization')
 		if (token == undefined || token == null) {
 			return null
 		}
 
-		let user = yield request.knex('users')
-			.first('api_token', token.trim())
+		const user = yield ctx.app.context.db('users')
+			.select()
+			.where('api_token', token.trim())
+			.first()
 			.then(row => { return row })
 			.catch(error => { return null })
+
+		if (user == undefined || user == null) {
+			return null
+		}
 
 		// Make sure the api token has not expired
 		const expiration = new Date(user.token_expiration)
@@ -43,4 +53,4 @@ class Auth {
 	}
 }
 
-export default Auth
+module.exports = Auth

@@ -1,7 +1,7 @@
 'use strict'
 
-import isEmail from 'validator/lib/isEmail'
-import JRes from './JResponse'
+const isEmail = require('validator/lib/isEmail')
+const JRes = require('./JResponse')
 
 class Validator {
 	static validateInvitee(invitee) {
@@ -104,4 +104,4 @@ class Validator {
 	}
 }
 
-export default Validator
+module.exports = Validator

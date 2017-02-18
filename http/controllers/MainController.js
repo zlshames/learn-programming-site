@@ -2,7 +2,7 @@
 
 // Import node modules
 const path = require('path')
-const sendfile = require('koa-sendfile')
+const sendFile = require('koa-sendfile')
 
 // Import utilities
 const Validator = require('../utils/Validator')
@@ -10,6 +10,7 @@ const Api = require('../utils/Api')
 
 // Import models
 const Invitee = require('../models/Invitee')
+const Auth = require('../models/Auth')
 
 class MainController {
 	/**
@@ -37,7 +38,7 @@ class MainController {
 		// Validate invitee object
 		const valid = Validator.validateInvitee(invitee)
 		if (!valid.success) {
-			return response.status(status).json(valid)
+			return this.body = valid
 		}
 
 		// TODO: Check if max invited for today
@@ -46,7 +47,7 @@ class MainController {
 		const slackRes = yield Api.sendSlackInvite(invitee.email.trim())
 		if (slackRes.success) {
 			status = 200
-			Invitee.create(this.context.db, invitee)
+			yield Invitee.create(this.app.context.db, invitee)
 		}
 
 		// Return response
@@ -55,4 +56,4 @@ class MainController {
 	}
 }
 
-export default MainController
+module.exports = MainController

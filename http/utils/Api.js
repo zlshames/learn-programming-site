@@ -1,8 +1,8 @@
 'use strict'
 
-import request from 'superagent'
-import cfg from './Config'
-import JRes from './JResponse'
+const request = require('superagent')
+const cfg = require('./Config')
+const JRes = require('./JResponse')
 
 class Api {
 	static * sendSlackInvite(email) {
@@ -23,6 +23,25 @@ class Api {
 
 		return res
 	}
+
+	static * getUserList() {
+		const res = yield request
+			.get(`https://slack.com/api/users.list?token=${ cfg.slackToken }`)
+			.then(success => {
+				const jsonRes = JSON.parse(success.text)
+
+				if (!jsonRes.ok) {
+					return JRes.failure((jsonRes.error) ? jsonRes.error : 'Unknown error')
+				}
+
+				return JRes.success('Successfully fetched user list', jsonRes.members)
+			})
+			.catch(error => {
+				return JRes.failure('Slack error')
+		})
+
+		return res
+	}
 }
 
-export default Api
+module.exports = Api

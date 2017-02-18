@@ -1,33 +1,25 @@
 'use strict'
 
 // Import models
-import Auth from '../models/Auth'
+const Auth = require('../models/Auth')
 
 class AuthController {
 
 	/**
-	 * Handles the request and response for
-	 * sending invites to people
-	 * @param request - The request object
-	 * @param response - The response object
+	 * Handles a request to sign in
+	 * @param next - The next state
 	 * @return JSON response
 	 */
-	static * signin(request, response) {
+	static * signin(next) {
 		// Get user data from request
-		const email = request.body.email.trim()
-		const password = request.body.password
+		const email = this.request.body.email.trim()
+		const password = this.request.body.password
 
 		// TODO: DO SOME VALIDATION HERE
 
-		// Attempt to login user
-		const result = yield Auth.login(request.knex, email, password)
-		if (!result.success) {
-			return response.status(400).json(result)
-		}
-
 		// Return success response
-		return response.status(200).json(result)
+		this.body = yield Auth.login(this.app.context.db, email, password)
 	}
 }
 
-export default AuthController
+module.exports = AuthController

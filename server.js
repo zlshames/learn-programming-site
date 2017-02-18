@@ -6,34 +6,29 @@ const path = require('path')
 //const bodyParser = require('body-parser')
 const koa = require('koa')
 const bodyParser = require('koa-bodyparser')
-const serve = require("koa-static-folder")
+const serve = require('koa-static')
 const router = require('koa-router')()
 
 // Config
-import dbConfig from './knexfile'
+const dbConfig = require('./knexfile')
 
 // Start Express Framework & Database Connection
 const app = koa()
 //const app = express()
 const knex = require('knex')(dbConfig.development)
 
-// Http Config
-app.use(bodyParser())
-app.use(router.routes())
-app.use(router.allowedMethods())
-app.use(serve("./dist"))
-
 // Bootstrap knex (db)
 app.context.db = knex
 
-//app.use(bodyParser.json())
-//app.use(bodyParser.urlencoded({ extended: false }))
-//app.use(express.static(path.join(__dirname, 'dist')))
+// Koa Middleware
+require('./http/middleware')(app)
 
-// Express Middleware
-require('./http/middleware')(app, knex)
+// Koa options
+app.use(serve('./dist'))
+app.use(bodyParser())
+app.use(router.routes())
+app.use(router.allowedMethods())
 
-// App routes
 require('./http/routes')(router)
 
 // Start server

@@ -1,46 +1,89 @@
 'use strict'
 
 // Import node modules
-import path from 'path'
+const path = require('path')
 
 // Import utilities
-import Validator from '../utils/Validator'
-import JRes from '../utils/JResponse'
+const Validator = require('../utils/Validator')
+const JRes = require('../utils/JResponse')
+const Api = require('../utils/Api')
 
 // Import models
-import User from '../models/User'
-import Auth from '../models/Auth'
+const User = require('../models/User')
 
 class UserController {
 
 	/**
-	 * Handles the request and response for
-	 * sending invites to people
-	 * @param request - The request object
-	 * @param response - The response object
+	 * Handles the user account creation
+	 * @param next - The next state
 	 * @return JSON response
 	 */
-	static * createUser(request, response) {
+	static * createUser(next) {
 		// If user is logged in, they can't create another account
-		const user = yield Auth.getUser(request)
-		if (user !== null) {
-			return response.status(403).json(JRes.failure('You already have an account'))
+		if (this.state.user !== null) {
+			return this.body = JRes.failure('You already have an account')
 		}
 
-		// Get user data from request
-		const userData = request.body.user
+		// Get user data from request and get Slack team list
+		const userData = this.request.body.user
+		const userList = yield Api.getUserList()
+		if (!userList.success) {
+			return this.body = JRes.failure('Failed to fetch Slack team')
+		}
+
+		let found = false
+		for (let i = 0; i < userList.data.length; i++) {
+			if (userList.data[i].profile.email == userData.email) {
+				found = true
+				break
+			}
+		}
+
+		// If user now found in Slack team, return
+		if (!found) {
+			return this.body = JRes.failure('You must be in the Slack team to join')
+		}
 
 		// TODO: DO SOME VALIDATION HERE
 
 		// Create user
-		const result = yield User.create(request.knex, userData)
-		if (!result) {
-			return response.status(400).json(JRes.failure('Failed to create user'))
+		this.body = yield User.create(this.app.context.db, userData)
+	}
+
+	/**
+	 * Shows the info of the logged in user
+	 * @param next - The next state
+	 * @return JSON response
+	 */
+	static * showSelf(next) {
+		// If no user found, can't show self
+		if (this.state.user == null) {
+			return this.body = JRes.failure('You must be logged in to view this')
 		}
 
-		// Return success response
-		return response.status(200).json(JRes.success('Successfully created user'))
+		const user = this.state.user
+
+		// Show self
+		this.body = JRes.success('Successfully fetched user info', {
+			id: user.id,
+			firstName: user.first_name,
+			lastName: user.last_name,
+			email: user.email,
+			position: user.position,
+			field: user.field,
+			skillLevel: user.skill_level
+		})
+	}
+
+	/**
+	 * Shows the info of a user
+	 * @param next - The next state
+	 * @return JSON response
+	 */
+	static * showUser(next) {
+		const userId = this.params.id
+		this.body = yield User.get(this.app.context.db, userId)
 	}
 }
 
-export default UserController
+module.exports = UserController
