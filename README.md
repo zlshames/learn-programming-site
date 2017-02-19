@@ -18,6 +18,15 @@ cp config.example.js config.js
 ```
 
 ### Creating MySQL Database
+
+This project uses MySQL as its persistence layer, and you'll need a local server for development.
+
+#### Using `docker-compose`
+
+A `docker-compose.yml` file is provided for convenience. See Docker's [documentation](https://docs.docker.com/compose/install/) to get started if you're not familiar with `docker-compose`. Navigate to the project's root and run
+`docker-compose up` to start a local MySQL server. You can pass the `-d` option to suppress output. Be sure to update your `config.js` to reflect the
+environment variables provided to the MySQL service in `docker-compose.yml`. The database provided via `MYSQL_DATABASE` in `docker-compose.yml` will be created during the server startup process. 
+
 > First, make sure MySQL is installed on your server
 ```
 sudo apt-get update

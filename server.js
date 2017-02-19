@@ -1,21 +1,14 @@
 'use strict'
 
-// Node Imports
-const path = require('path')
-//const express = require('express')
-//const bodyParser = require('body-parser')
-const koa = require('koa')
 const bodyParser = require('koa-bodyparser')
-const serve = require('koa-static')
-const router = require('koa-router')()
-
-// Config
 const dbConfig = require('./knexfile')
-
-// Start Express Framework & Database Connection
-const app = koa()
-//const app = express()
 const knex = require('knex')(dbConfig.development)
+const koa = require('koa')
+const path = require('path')
+const router = require('koa-router')()
+const serve = require('koa-static')
+
+const app = koa()
 
 // Bootstrap knex (db)
 app.context.db = knex

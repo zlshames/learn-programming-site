@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  db_dev:
+    image: mysql:5.7.11
+    ports:
+      - "3306:3306"
+    container_name: learn-programming-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=75234963c13e0ac2d60015230e20b81c
+      - MYSQL_DATABASE=learn_programming
+      - MYSQL_USER=learn_programming_user
+      - MYSQL_PASSWORD=learn_programming_password
