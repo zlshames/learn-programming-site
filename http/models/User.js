@@ -22,7 +22,7 @@ class User {
 				email: user.email.trim(),
 				password: bcrypt.hashSync(user.password, saltRounds),
 				position: user.position.trim(),
-				skill_level: user.skill_level.trim(),
+				skill_level: user.skillLevel.trim(),
 				field: user.field.trim(),
 				api_token: token,
 				token_expiration: eDate,

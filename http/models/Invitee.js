@@ -9,7 +9,7 @@ class Invitee {
 			name: invitee.name.trim(),
 			email: invitee.email.trim(),
 			position: invitee.position.trim(),
-			skill_level: invitee.skill_level.trim(),
+			skill_level: invitee.skillLevel.trim(),
 			field: invitee.field.trim(),
 			created_at: new Date(),
 			updated_at: new Date()

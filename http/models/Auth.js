@@ -10,7 +10,18 @@ class Auth {
 		let user = yield db('users')
 			.select()
 			.where('email', email)
-			.first(['password', 'api_token', 'token_expiration'])
+			.first([
+				'id',
+				'first_name',
+				'last_name',
+				'email',
+				'position',
+				'field',
+				'skill_level',
+				'password',
+				'api_token',
+				'token_expiration'
+			])
 			.then(row => { return row })
 			.catch(error => { return null })
 
@@ -40,7 +51,18 @@ class Auth {
 				.catch(error => { return error })
 		}
 
-		return JRes.success('Successfully logged in', { token: user.api_token })
+		return JRes.success('Successfully logged in', {
+			token: user.api_token,
+			user: {
+				id: user.id,
+				firstName: user.first_name,
+				lastName: user.last_name,
+				email: user.email,
+				position: user.position,
+				field: user.field,
+				skillLevel: user.skillLevel
+			}
+		})
 	}
 
 	static * getUser(ctx) {
@@ -63,8 +85,6 @@ class Auth {
 		// Make sure the api token has not expired
 		const expiration = new Date(user.token_expiration)
 		const cDate = new Date()
-		console.log(expiration)
-		console.log(cDate)
 		if (cDate > expiration) {
 			return null
 		}

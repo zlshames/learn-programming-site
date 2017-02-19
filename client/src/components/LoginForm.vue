@@ -47,6 +47,7 @@
 
 <script>
 	import request from 'superagent'
+	import storage from '../utils/Storage'
 
 	export default {
 		data: function () {
@@ -61,7 +62,14 @@
 			}
 		},
 		mounted() {
-			console.log('Login component mounted.')
+			let user
+
+			try {
+				user = JSON.parse(storage.getItem('user'))
+				this.email = user.email
+			} catch (ex) {
+				// Do nothing
+			}
 		},
 		methods: {
 			submitForm() {
@@ -96,7 +104,11 @@
 						password: this.password
 					})
 					.then((success) => {
-						location.href = '/profile'
+						// save user info
+						storage.setItem('api_token', success.body.data.token)
+						storage.setItem('user', JSON.stringify(success.body.data.user))
+
+						this.$router.push({ name: 'profile' })
 					})
 					.catch((error) => {
 						this.handleErrors(error)
@@ -111,11 +123,8 @@
 				}
 
 				// Handle form errors
-				if (error.response.body.errors) {
-					const errors = error.response.body.errors
-
-					this.errors.email = (errors.email) ? errors.email[0] : null
-					this.errors.password = (errors.password) ? errors.password[0] : null
+				if (error.response.body.error) {
+					this.errors.main = error.response.body.error
 				} else {
 					this.errors.main = 'An unknown error occured.'
 				}

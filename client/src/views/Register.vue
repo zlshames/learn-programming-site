@@ -3,7 +3,7 @@
 		<navigation></navigation>
 
 		<div class="page-container">
-			<router-view></router-view>
+			<register-form></register-form>
 		</div>
 
 		<footer-template></footer-template>
@@ -13,16 +13,13 @@
 <script>
 import FooterTemplate from '../components/Footer.vue'
 import Navigation from '../components/Navigation.vue'
+import RegisterForm from '../components/RegisterForm.vue'
 
 export default {
 	components: {
 		Navigation,
+		RegisterForm,
 		FooterTemplate
-	},
-	data() {
-		return {
-
-		}
 	}
 }
 </script>

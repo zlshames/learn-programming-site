@@ -168,12 +168,30 @@
 				skillLevels: Options.skillLevels
 			}
 		},
-		mounted() {
-			console.log('Register component mounted.')
-		},
 		methods: {
 			submitForm() {
-				let hasError = false;
+				if (!this.validate()) {
+					return
+				}
+
+				// Make position, field, and skillLevel lowercase
+				this.user.position = this.user.position.toLowerCase()
+				this.user.field = this.user.field.toLowerCase()
+				this.user.skillLevel = this.user.skillLevel.toLowerCase()
+
+				// Send HTTP request
+				request
+					.post('/api/v1/user')
+					.send({ user: this.user })
+					.then((success) => {
+						this.$router.push({ name: 'login' })
+					})
+					.catch((error) => {
+						this.handleErrors(error)
+				})
+			},
+			validate() {
+				let valid = true;
 
 				// Clear errors
 				this.errors.main = null
@@ -187,46 +205,47 @@
 				this.errors.skillLevel = null
 
 				// Validation
-				if (this.email == '' || this.email.length < 6 || this.email.indexOf('@') < 0) {
+				if (this.user.email == '' || this.user.email.length < 6 || this.user.email.indexOf('@') < 0) {
 					this.errors.email = 'Please enter a valid email'
-					hasError = true
+					valid = false
 				}
 
-				if (this.username == '' || this.username.length < 3) {
-					this.errors.username = 'Username must be at least 3 characters.'
-					hasError = true
+				if (this.user.firstName == '') {
+					this.errors.firstName = 'Please enter your first name.'
+					valid = false
 				}
 
-				if (this.password == '' || this.password.length < 6) {
+				if (this.user.lastName == '') {
+					this.errors.lastName = 'Please enter your last name.'
+					valid = false
+				}
+
+				if (this.user.password == '' || this.user.password.length < 6) {
 					this.errors.password = 'Password must be at least 6 characters.'
-					hasError = true
+					valid = false
 				}
 
-				if (this.confirmation !== this.password) {
+				if (this.user.confirmation !== this.user.password) {
 					this.errors.confirmation = 'Confirmation does not match password.'
-					hasError = true
+					valid = false
 				}
 
-				// Check hasError so all errors are shown
-				if (hasError) {
-					return;
+				if (this.user.position == null) {
+					this.errors.position = 'This is required'
+					valid = false
 				}
 
-				// Send HTTP request
-				request
-					.post('/auth/signup')
-					.send({
-						username: this.username,
-						email: this.email,
-						password: this.password,
-						password_confirmation: this.confirmation
-					})
-					.then((success) => {
-						location.href = '/login'
-					})
-					.catch((error) => {
-						this.handleErrors(error)
-				})
+				if (this.user.field == null) {
+					this.errors.field = 'This is required'
+					valid = false
+				}
+
+				if (this.user.position == null) {
+					this.errors.skillLevel = 'This is required'
+					valid = false
+				}
+
+				return valid
 			},
 			handleErrors(error) {
 				// Handle status errors
@@ -237,12 +256,8 @@
 				}
 
 				// Handle form errors
-				if (error.response.body.errors) {
-					const errors = error.response.body.errors
-
-					this.errors.username = (errors.username) ? errors.username[0] : null
-					this.errors.email = (errors.email) ? errors.email[0] : null
-					this.errors.password = (errors.password) ? errors.password[0] : null
+				if (error.response.body.error) {
+					this.errors.main = error.response.body.error
 				} else {
 					this.errors.main = 'An unknown error occured.'
 				}

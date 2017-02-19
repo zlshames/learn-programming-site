@@ -5,6 +5,9 @@ const Auth = require('./models/Auth')
 
 module.exports = (app) => {
 	app.use(function * (next) {
+		this.set('Access-Control-Allow-Origin', '*')
+		this.set('Access-Control-Allow-Headers', 'Content-Type')
+		this.set('Access-Control-Allow-Methods', '*')
 		try {
 			this.state.user = yield Auth.getUser(this)
 

@@ -26,7 +26,7 @@ class Validator {
 		}
 
 		// Validate Skill
-		if (!this.checkSkill(invitee.skill_level)) {
+		if (!this.checkSkill(invitee.skillLevel)) {
 			return JRes.failure('Invalid Skill Level')
 		}
 

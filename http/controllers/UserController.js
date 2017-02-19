@@ -19,8 +19,11 @@ class UserController {
 	 * @return JSON response
 	 */
 	static * createUser(next) {
+		this.status = 400
+
 		// If user is logged in, they can't create another account
 		if (this.state.user !== null) {
+			this.status = 403
 			return this.body = JRes.failure('You already have an account')
 		}
 
@@ -28,6 +31,7 @@ class UserController {
 		const userData = this.request.body.user
 		const userList = yield Api.getUserList()
 		if (!userList.success) {
+			this.status = 500
 			return this.body = JRes.failure('Failed to fetch Slack team')
 		}
 
@@ -41,13 +45,19 @@ class UserController {
 
 		// If user now found in Slack team, return
 		if (!found) {
+			this.status = 403
 			return this.body = JRes.failure('You must be in the Slack team to join')
 		}
 
 		// TODO: DO SOME VALIDATION HERE
 
+		const result = yield User.create(this.app.context.db, userData)
+		if (result.success) {
+			this.status = 200
+		}
+
 		// Create user
-		this.body = yield User.create(this.app.context.db, userData)
+		this.body = result
 	}
 
 	/**
@@ -58,12 +68,14 @@ class UserController {
 	static * showSelf(next) {
 		// If no user found, can't show self
 		if (this.state.user == null) {
+			this.status = 400
 			return this.body = JRes.failure('You must be logged in to view this')
 		}
 
 		const user = this.state.user
 
 		// Show self
+		this.status = 200
 		this.body = JRes.success('Successfully fetched user info', {
 			id: user.id,
 			firstName: user.first_name,
@@ -81,38 +93,54 @@ class UserController {
 	 * @return JSON response
 	 */
 	static * showUser(next) {
+		this.status = 400
 		const userId = this.params.id
 
 		if (userId == 'all') {
 			const user = this.state.user
 			if (user == null) {
+				this.status = 403
 				return this.body = JRes.failure('You must be logged in to view this')
 			}
 
 			// return if user is not an admin (if all)
 			if (!user.is_admin) {
+				this.status = 401
 				return this.body = JRes.failure('You are unauthorized to view this')
 			}
 		}
 
-		this.body = yield User.get(this.app.context.db, userId)
+		const result = yield User.get(this.app.context.db, userId)
+		if (result.success) {
+			this.status = 200
+		}
+
+		this.body = result
 	}
 
 	static * deleteUser(next) {
+		this.status = 400
 		const userId = this.params.id
 
 		// Make sure the user is logged in
 		const user = this.state.user
 		if (user == null) {
+			this.status = 403
 			return this.body = JRes.failure('You must be logged in to do this')
 		}
 
 		// If user isn't an admin and doesn't match ID, return unauthorized
 		if (!user.is_admin && user.id !== userId) {
+			this.status = 401
 			return this.body = Jres.failure('You are not authorized to do this')
 		}
 
-		this.body = yield User.delete(this.app.context.db, userId)
+		const result = yield User.delete(this.app.context.db, userId)
+		if (result.success) {
+			this.status = 200
+		}
+
+		this.body = result
 	}
 }
 

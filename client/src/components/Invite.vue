@@ -36,7 +36,7 @@
 					</div>
 					<div class="form-group col-xs-4" :class="[errors.skillLevel !== null ? 'has-error' : '']">
 						<label for="skillLevel">Your skill level</label>
-						<select v-model="invitee.skill_level" name="skill_level" class="form-control" required>
+						<select v-model="invitee.skillLevel" name="skillLevel" class="form-control" required>
 							<option v-for="level in skillLevels" :value="level">{{ level }}</option>
 						</select>
 					</div>
@@ -85,7 +85,7 @@ export default {
 				email: '',
 				position: null,
 				field: null,
-				skill_level: null
+				skillLevel: null
 			},
 			// Select Option datat
 			positions: Options.positions,
@@ -102,7 +102,7 @@ export default {
 			if (this.validation()) {
 				this.invitee.position = this.invitee.position.toLowerCase()
 				this.invitee.field = this.invitee.field.toLowerCase()
-				this.invitee.skill_level = this.invitee.skill_level.toLowerCase()
+				this.invitee.skillLevel = this.invitee.skillLevel.toLowerCase()
 
 				request
 					.post('/api/v1/invitee')
