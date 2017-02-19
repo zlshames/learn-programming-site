@@ -23,19 +23,31 @@ class Invitee {
 	}
 
 	static * get(db, id) {
-		let output
+		let result
 
 		if (id == 'all') {
-			output = yield db('invitees')
+			result = yield db('invitees')
 				.select()
 				.then(dbRes => {
-					return JRes.success('Successfully fetched all invitees', dbRes)
+					const output = []
+					for (let i = 0; i < dbRes.length; i++) {
+						output.push({
+							id: dbRes[i].id,
+							name: dbRes[i].name,
+							email: dbRes[i].email,
+							position: dbRes[i].position,
+							field: dbRes[i].field,
+							skillLevel: dbRes[i].skill_level
+						})
+					}
+
+					return JRes.success('Successfully fetched all invitees', output)
 				})
 				.catch(error => {
 					return JRes.failure(`Failed to fetch all invitees: ${ error.code }`)
 			})
 		} else {
-			output = yield db('invitees')
+			result = yield db('invitees')
 				.select()
 				.where('id', id)
 				.first()
@@ -43,7 +55,16 @@ class Invitee {
 					if (dbRes == undefined || dbRes == null) {
 						return JRes.failure('Failed to find invitee by ID')
 					} else {
-						return JRes.success('Successfully fetched all invitees', dbRes)
+						const output = {
+							id: dbRes.id,
+							name: dbRes.name,
+							email: dbRes.email,
+							position: dbRes.position,
+							field: dbRes.field,
+							skillLevel: dbRes.skill_level
+						}
+
+						return JRes.success('Successfully fetched all invitees', output)
 					}
 				})
 				.catch(error => {
@@ -51,7 +72,7 @@ class Invitee {
 			})
 		}
 
-		return output
+		return result
 	}
 
 	static * delete(db, id) {

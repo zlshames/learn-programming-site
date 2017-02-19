@@ -54,11 +54,24 @@ class User {
 					'skill_level'
 				])
 				.then(dbRes => {
-					return JRes.success('Successfully fetched all users', dbRes)
+					let output = []
+					for (let i = 0; i < dbRes.length; i++) {
+						output.push({
+							id: dbRes[i].id,
+							firstName: dbRes[i].first_name,
+							lastName: dbRes[i].last_name,
+							email: dbRes[i].email,
+							position: dbRes[i].position,
+							field: dbRes[i].field,
+							skillLevel: dbRes[i].skill_level
+						})
+					}
+
+					return JRes.success('Successfully fetched all users', output)
 				})
 				.catch(error => {
 					return JRes.failure(`Failed to fetch all users: ${ error.code }`)
-				})
+			})
 		} else {
 			result = yield db('users')
 				.select([
@@ -76,12 +89,22 @@ class User {
 					if (dbRes == undefined || dbRes == null) {
 						return JRes.failure('Could not find user by ID')
 					} else {
-						return JRes.success('Successfully fetched user', dbRes)
+						let output = {
+							id: dbRes.id,
+							firstName: dbRes.first_name,
+							lastName: dbRes.last_name,
+							email: dbRes.email,
+							position: dbRes.position,
+							field: dbRes.field,
+							skillLevel: dbRes.skill_level
+						}
+
+						return JRes.success('Successfully fetched user', output)
 					}
 				})
 				.catch(error => {
 					return JRes.failure(`Failed to fetch user: ${ error.code }`)
-				})
+			})
 		}
 
 		return result

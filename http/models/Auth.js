@@ -60,7 +60,7 @@ class Auth {
 				email: user.email,
 				position: user.position,
 				field: user.field,
-				skillLevel: user.skillLevel
+				skillLevel: user.skill_level
 			}
 		})
 	}
