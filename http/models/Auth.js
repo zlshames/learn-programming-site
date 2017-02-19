@@ -1,7 +1,6 @@
 'use strict'
 
 const bcrypt = require('bcrypt')
-
 const JRes = require('../utils/JResponse')
 
 class Auth {
