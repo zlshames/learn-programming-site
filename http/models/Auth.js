@@ -1,6 +1,7 @@
 'use strict'
 
 const bcrypt = require('bcrypt')
+const random = require('randomstring')
 
 const JRes = require('../utils/JResponse')
 
@@ -9,7 +10,7 @@ class Auth {
 		let user = yield db('users')
 			.select()
 			.where('email', email)
-			.first(['password', 'api_token'])
+			.first(['password', 'api_token', 'token_expiration'])
 			.then(row => { return row })
 			.catch(error => { return null })
 
@@ -20,6 +21,23 @@ class Auth {
 		const match = bcrypt.compareSync(password, user.password)
 		if (!match) {
 			return JRes.failure('Invalid password')
+		}
+
+		// If token expired, generate new one
+		const expiration = new Date(user.token_expiration)
+		const cDate = new Date()
+		if (cDate > expiration) {
+			user.api_token = random.generate(60)
+			cDate.setDate(cDate.getDate() + 31)
+
+			yield db('users')
+				.update({
+					api_token: user.api_token,
+					token_expiration: cDate
+				})
+				.where('email', email)
+				.then(row => { return row })
+				.catch(error => { return error })
 		}
 
 		return JRes.success('Successfully logged in', { token: user.api_token })
@@ -45,6 +63,8 @@ class Auth {
 		// Make sure the api token has not expired
 		const expiration = new Date(user.token_expiration)
 		const cDate = new Date()
+		console.log(expiration)
+		console.log(cDate)
 		if (cDate > expiration) {
 			return null
 		}

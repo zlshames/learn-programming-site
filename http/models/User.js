@@ -40,28 +40,49 @@ class User {
 	}
 
 	static * get(db, userId) {
-		const result = yield db('users')
-			.select([
-				'id',
-				'first_name',
-				'last_name',
-				'email',
-				'position',
-				'field',
-				'skill_level'
-			])
-			.where('id', userId)
-			.first()
-			.then(dbRes => {
-				if (dbRes == undefined || dbRes == null) {
-					return JRes.failure('Could not find user with that ID')
-				} else {
-					return JRes.success('Successfully fetched user', dbRes)
-				}
-			})
-			.catch(error => {
-				return JRes.failure(`Failed to fetch user: ${ error.code }`)
-			})
+		let result
+
+		if (userId == 'all') {
+			result = yield db('users')
+				.select([
+					'id',
+					'first_name',
+					'last_name',
+					'email',
+					'position',
+					'field',
+					'skill_level'
+				])
+				.then(dbRes => {
+					return JRes.success('Successfully fetched all users', dbRes)
+				})
+				.catch(error => {
+					return JRes.failure(`Failed to fetch all users: ${ error.code }`)
+				})
+		} else {
+			result = yield db('users')
+				.select([
+					'id',
+					'first_name',
+					'last_name',
+					'email',
+					'position',
+					'field',
+					'skill_level'
+				])
+				.where('id', userId)
+				.first()
+				.then(dbRes => {
+					if (dbRes == undefined || dbRes == null) {
+						return JRes.failure('Could not find user by ID')
+					} else {
+						return JRes.success('Successfully fetched user', dbRes)
+					}
+				})
+				.catch(error => {
+					return JRes.failure(`Failed to fetch user: ${ error.code }`)
+				})
+		}
 
 		return result
 	}
@@ -104,16 +125,16 @@ class User {
 		return result
 	}
 
-	static * delete(db, user) {
+	static * delete(db, id) {
 		let result = yield db('users')
-		.where('email', user.email)
-		.del()
-		.then(dbRes => {
-			return true
-		})
-		.catch(error => {
-			return false
-		})
+			.where('id', id)
+			.del()
+			.then(dbRes => {
+				return JRes.success('Successfully deleted user')
+			})
+			.catch(error => {
+				return JRes.failure('Failed to delete user')
+			})
 
 		return result
 	}

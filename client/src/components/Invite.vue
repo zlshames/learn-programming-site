@@ -120,7 +120,7 @@ export default {
 				this.invitee.skill_level = this.invitee.skill_level.toLowerCase()
 
 				request
-					.post('/api/v1/invite')
+					.post('/api/v1/invitee')
 					.send({
 						invitee: this.invitee
 					})

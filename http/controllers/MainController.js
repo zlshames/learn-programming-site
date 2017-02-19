@@ -4,14 +4,6 @@
 const path = require('path')
 const sendFile = require('koa-sendfile')
 
-// Import utilities
-const Validator = require('../utils/Validator')
-const Api = require('../utils/Api')
-
-// Import models
-const Invitee = require('../models/Invitee')
-const Auth = require('../models/Auth')
-
 class MainController {
 	/**
 	 * Handles the request and response for the front-end
@@ -22,37 +14,6 @@ class MainController {
 	static * index(next) {
 		yield sendFile(this, path.join(__dirname, '../../dist/index.html'))
 		yield next
-	}
-
-	/**
-	 * Handles the request and response for
-	 * sending invites to people
-	 * @param request - The request object
-	 * @param response - The response object
-	 * @return JSON response
-	 */
-	static * createInvitee(next) {
-		let invitee = this.request.body.invitee
-		let status = 400
-
-		// Validate invitee object
-		const valid = Validator.validateInvitee(invitee)
-		if (!valid.success) {
-			return this.body = valid
-		}
-
-		// TODO: Check if max invited for today
-
-		// Send Invite Request to Slack API
-		const slackRes = yield Api.sendSlackInvite(invitee.email.trim())
-		if (slackRes.success) {
-			status = 200
-			yield Invitee.create(this.app.context.db, invitee)
-		}
-
-		// Return response
-		this.status = status
-		this.body = slackRes
 	}
 }
 
