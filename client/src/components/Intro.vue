@@ -23,5 +23,6 @@
 		box-shadow: 0 3px 5px rgba(0,0,0,0.2);
 		text-align: center;
 		width: 400px;
+		margin: 0 auto;
 	}
 </style>

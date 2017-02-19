@@ -60,6 +60,7 @@
 import request from 'superagent'
 import VueRecaptcha from 'vue-recaptcha'
 import Alert from './Alert'
+import Options from '../utils/Options'
 
 export default {
 	components: { VueRecaptcha, Alert },
@@ -87,25 +88,9 @@ export default {
 				skill_level: null
 			},
 			// Select Option datat
-			positions: [
-				'Student',
-				'Employed',
-				'Contractor',
-				'Freelancer',
-				'Other'
-			],
-			fields: [
-				'Front-End',
-				'Back-End',
-				'Full-Stack',
-				'Mobile',
-				'Other'
-			],
-			skillLevels: [
-				'Beginner',
-				'Intermediate',
-				'Advanced'
-			]
+			positions: Options.positions,
+			fields: Options.fields,
+			skillLevels: Options.skillLevels
 		}
 	},
 	methods: {
@@ -203,6 +188,7 @@ export default {
 		background: white;
 		box-shadow: 0 3px 5px rgba(0,0,0,0.2);
 		width: 450px;
+		margin: 0 auto;
 	}
 
 	.form-control {

@@ -33,6 +33,7 @@
     "superagent": "^3.4.1",
     "validator": "^6.2.1",
     "vue": "^2.1.6",
+    "vue-multiselect": "^2.0.0-beta.13",
     "vue-recaptcha": "^0.3.2",
     "vue-router": "^2.1.1"
   },
@@ -52,6 +53,7 @@
     "eslint": "^3.6.0",
     "eslint-config-vue": "latest",
     "eslint-plugin-vue": "^1.0.0",
+    "express": "^4.14.1",
     "extract-text-webpack-plugin": "^2.0.0-beta.3",
     "file-loader": "^0.9.0",
     "fs-extra": "^1.0.0",

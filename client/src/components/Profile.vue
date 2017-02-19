@@ -1,9 +1,11 @@
 <template>
-	<div>
+	<div class="full-page">
 		<navigation></navigation>
 
-		<div class="page-container">
-			<router-view></router-view>
+		<div class="full-page">
+			<div class="center-page">
+				<router-view></router-view>
+			</div>
 		</div>
 
 		<footer-template></footer-template>
