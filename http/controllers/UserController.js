@@ -82,7 +82,37 @@ class UserController {
 	 */
 	static * showUser(next) {
 		const userId = this.params.id
+
+		if (userId == 'all') {
+			const user = this.state.user
+			if (user == null) {
+				return this.body = JRes.failure('You must be logged in to view this')
+			}
+
+			// return if user is not an admin (if all)
+			if (!user.is_admin) {
+				return this.body = JRes.failure('You are unauthorized to view this')
+			}
+		}
+
 		this.body = yield User.get(this.app.context.db, userId)
+	}
+
+	static * deleteUser(next) {
+		const userId = this.params.id
+
+		// Make sure the user is logged in
+		const user = this.state.user
+		if (user == null) {
+			return this.body = JRes.failure('You must be logged in to do this')
+		}
+
+		// If user isn't an admin and doesn't match ID, return unauthorized
+		if (!user.is_admin && user.id !== userId) {
+			return this.body = Jres.failure('You are not authorized to do this')
+		}
+
+		this.body = yield User.delete(this.app.context.db, userId)
 	}
 }
 
