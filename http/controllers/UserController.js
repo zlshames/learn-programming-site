@@ -110,12 +110,52 @@ class UserController {
 			}
 		}
 
-		const result = yield User.get(this.app.context.db, userId)
-		if (result.success) {
+		let output = null
+		if (userId == 'all') {
+			const result = yield User.findAll(this.app.context.db)
+			if (result.success) {
+				let arr = []
+
+				for (let i = 0; i < result.data.length; i++) {
+					arr.push({
+						id: result.data[i].id,
+						firstName: result.data[i].first_name,
+						lastName: result.data[i].last_name,
+						email: result.data[i].email,
+						position: result.data[i].position,
+						field: result.data[i].field,
+						skillLevel: result.data[i].skill_level,
+						createdAt: result.data[i].created_at
+					})
+				}
+
+				output = JRes.success(result.message, arr)
+			} else {
+				output = result
+			}
+		} else {
+			const result = yield User.findById(this.app.context.db, userId)
+			if (result.success) {
+				output = JRes.success(result.message, {
+					id: result.data.id,
+					firstName: result.data.first_name,
+					lastName: result.data.last_name,
+					email: result.data.email,
+					position: result.data.position,
+					field: result.data.field,
+					skillLevel: result.data.skill_level,
+					createdAt: result.data.created_at
+				})
+			} else {
+				output = result
+			}
+		}
+
+		if (output.success) {
 			this.status = 200
 		}
 
-		this.body = result
+		this.body = output
 	}
 
 	static * deleteUser(next) {

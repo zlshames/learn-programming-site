@@ -39,73 +39,34 @@ class User {
 		return result
 	}
 
-	static * get(db, userId) {
-		let result
-
-		if (userId == 'all') {
-			result = yield db('users')
-				.select([
-					'id',
-					'first_name',
-					'last_name',
-					'email',
-					'position',
-					'field',
-					'skill_level'
-				])
-				.then(dbRes => {
-					let output = []
-					for (let i = 0; i < dbRes.length; i++) {
-						output.push({
-							id: dbRes[i].id,
-							firstName: dbRes[i].first_name,
-							lastName: dbRes[i].last_name,
-							email: dbRes[i].email,
-							position: dbRes[i].position,
-							field: dbRes[i].field,
-							skillLevel: dbRes[i].skill_level
-						})
-					}
-
-					return JRes.success('Successfully fetched all users', output)
-				})
-				.catch(error => {
-					return JRes.failure(`Failed to fetch all users: ${ error.code }`)
+	static * findAll(db) {
+		let result = yield db('users')
+			.select()
+			.then(dbRes => {
+				return JRes.success('Successfully fetched all users', dbRes)
 			})
-		} else {
-			result = yield db('users')
-				.select([
-					'id',
-					'first_name',
-					'last_name',
-					'email',
-					'position',
-					'field',
-					'skill_level'
-				])
-				.where('id', userId)
-				.first()
-				.then(dbRes => {
-					if (dbRes == undefined || dbRes == null) {
-						return JRes.failure('Could not find user by ID')
-					} else {
-						let output = {
-							id: dbRes.id,
-							firstName: dbRes.first_name,
-							lastName: dbRes.last_name,
-							email: dbRes.email,
-							position: dbRes.position,
-							field: dbRes.field,
-							skillLevel: dbRes.skill_level
-						}
+			.catch(error => {
+				return JRes.failure(`Failed to fetch all users: ${ error.code }`)
+		})
 
-						return JRes.success('Successfully fetched user', output)
-					}
-				})
-				.catch(error => {
-					return JRes.failure(`Failed to fetch user: ${ error.code }`)
+		return result
+	}
+
+	static * findById(db, id) {
+		let result = yield db('users')
+			.select()
+			.where('id', id)
+			.first()
+			.then(dbRes => {
+				if (dbRes == undefined || dbRes == null) {
+					return JRes.failure('Could not find user by ID')
+				} else {
+					return JRes.success('Successfully fetched user', dbRes)
+				}
 			})
-		}
+			.catch(error => {
+				return JRes.failure(`Failed to fetch user: ${ error.code }`)
+		})
 
 		return result
 	}

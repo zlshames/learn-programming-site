@@ -15,62 +15,41 @@ class Invitee {
 			updated_at: new Date()
 		})
 		.then(dbRes => {
-			console.log(`Saved invitee: ${ invitee.email }`)
+			return JRes.success('Successfully created invitee')
 		})
 		.catch(error => {
-			console.log(`A database error occured: ${ error }`)
+			return JRes.failure(`Failed to create invitee: ${ error.code }`)
 		})
 	}
 
-	static * get(db, id) {
-		let result
-
-		if (id == 'all') {
-			result = yield db('invitees')
-				.select()
-				.then(dbRes => {
-					const output = []
-					for (let i = 0; i < dbRes.length; i++) {
-						output.push({
-							id: dbRes[i].id,
-							name: dbRes[i].name,
-							email: dbRes[i].email,
-							position: dbRes[i].position,
-							field: dbRes[i].field,
-							skillLevel: dbRes[i].skill_level
-						})
-					}
-
-					return JRes.success('Successfully fetched all invitees', output)
-				})
-				.catch(error => {
-					return JRes.failure(`Failed to fetch all invitees: ${ error.code }`)
+	static * findAll(db) {
+		let result = yield db('invitees')
+			.select()
+			.then(dbRes => {
+				return JRes.success('Successfully fetched all invitees', dbRes)
 			})
-		} else {
-			result = yield db('invitees')
-				.select()
-				.where('id', id)
-				.first()
-				.then(dbRes => {
-					if (dbRes == undefined || dbRes == null) {
-						return JRes.failure('Failed to find invitee by ID')
-					} else {
-						const output = {
-							id: dbRes.id,
-							name: dbRes.name,
-							email: dbRes.email,
-							position: dbRes.position,
-							field: dbRes.field,
-							skillLevel: dbRes.skill_level
-						}
+			.catch(error => {
+				return JRes.failure(`Failed to fetch all invitees: ${ error.code }`)
+		})
 
-						return JRes.success('Successfully fetched all invitees', output)
-					}
-				})
-				.catch(error => {
-					return JRes.failure(`Failed to fetch invitee: ${ error.code }`)
+		return result
+	}
+
+	static * findById(db, id) {
+		let result = yield db('invitees')
+			.select()
+			.where('id', id)
+			.first()
+			.then(dbRes => {
+				if (dbRes == undefined || dbRes == null) {
+					return JRes.failure('Failed to find invitee by ID')
+				} else {
+					return JRes.success('Successfully fetched all invitees', dbRes)
+				}
 			})
-		}
+			.catch(error => {
+				return JRes.failure(`Failed to fetch invitee: ${ error.code }`)
+		})
 
 		return result
 	}

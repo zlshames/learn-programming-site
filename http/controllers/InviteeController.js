@@ -43,24 +43,67 @@ class InviteeController {
 	static * showInvitee(next) {
 		this.status = 400
 
+		// Make sure user is logged in
 		const user = this.state.user
 		if (user == null) {
 			this.status = 403
 			return this.body = JRes.failure('You must be logged in to view this')
 		}
 
+		// Make sure user is an admin
 		if (!user.is_admin) {
 			this.status = 401
 			return this.body = JRes.failure('You are unauthorized to view this')
 		}
 
 		const id = this.params.id
-		const result = yield Invitee.get(this.app.context.db, id)
-		if (result.success) {
+		let output = null
+
+		if (id == 'all') {
+			const result = yield Invitee.findAll(this.app.context.db)
+			if (result.success) {
+				let arr = []
+
+				// Sanitize data
+				for (let i = 0; i < result.data.length; i++) {
+					arr.push({
+						id: result.data[i].id,
+						name: result.data[i].name,
+						email: result.data[i].email,
+						position: result.data[i].position,
+						field: result.data[i].field,
+						skillLevel: result.data[i].skill_level,
+						createdAt: result.data[i].created_at
+					})
+				}
+
+				output = JRes.success(result.message, arr)
+			} else {
+				output = result
+			}
+		} else {
+			const result = yield Invitee.findById(this.app.context.db, id)
+			if (result.success) {
+				// Sanitize data
+				output = JRes.success(result.message, {
+					id: result.data.id,
+					name: result.data.name,
+					email: result.data.email,
+					position: result.data.position,
+					field: result.data.field,
+					skillLevel: result.data.skill_level,
+					createdAt: result.data.created_at
+				})
+			} else {
+				output = result
+			}
+		}
+
+		if (output.success) {
 			this.status = 200
 		}
 
-		this.body = result
+		this.body = output
 	}
 
 	static * deleteInvitee(next) {
