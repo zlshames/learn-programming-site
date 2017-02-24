@@ -48,6 +48,7 @@
 <script>
 	import request from 'superagent'
 	import storage from '../utils/Storage'
+	import config from '../utils/Config'
 
 	export default {
 		data: function () {
@@ -98,7 +99,7 @@
 
 				// Send HTTP request
 				request
-					.post('/auth/signin')
+					.post(config.baseUrl + '/auth/signin')
 					.send({
 						email: this.email,
 						password: this.password
@@ -108,7 +109,7 @@
 						storage.setItem('api_token', success.body.data.token)
 						storage.setItem('user', JSON.stringify(success.body.data.user))
 
-						this.$router.push({ name: 'profile' })
+						this.$router.push({ name: 'profile-self' })
 					})
 					.catch((error) => {
 						this.handleErrors(error)

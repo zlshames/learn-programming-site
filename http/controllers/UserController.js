@@ -125,6 +125,7 @@ class UserController {
 						position: result.data[i].position,
 						field: result.data[i].field,
 						skillLevel: result.data[i].skill_level,
+						isAdmin: result.data[i].is_admin,
 						createdAt: result.data[i].created_at
 					})
 				}

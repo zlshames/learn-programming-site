@@ -21,7 +21,7 @@
 				<!-- Left Side Of Navbar -->
 				<ul class="nav navbar-nav">
 						<li v-if="!loggedIn"><router-link :to="{ name: 'intro' }">Get Invite</router-link></li>
-						<li v-if="loggedIn && user.is_admin"><router-link :to="{ name: 'admin-panel' }">Admin Panel</router-link></li>
+						<li v-if="loggedIn && user.isAdmin"><router-link :to="{ name: 'admin' }">Admin Panel</router-link></li>
 						<li v-if="loggedIn"><router-link :to="{ name: 'my-blog' }">My Blog</router-link></li>
 				</ul>
 

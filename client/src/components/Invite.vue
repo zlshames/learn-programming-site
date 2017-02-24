@@ -61,6 +61,7 @@ import request from 'superagent'
 import VueRecaptcha from 'vue-recaptcha'
 import Alert from './Alert'
 import Options from '../utils/Options'
+import config from '../utils/Config'
 
 export default {
 	components: { VueRecaptcha, Alert },
@@ -105,7 +106,7 @@ export default {
 				this.invitee.skillLevel = this.invitee.skillLevel.toLowerCase()
 
 				request
-					.post('/api/v1/invitee')
+					.post(config.baseUrl + '/api/v1/invitee')
 					.send({
 						invitee: this.invitee
 					})

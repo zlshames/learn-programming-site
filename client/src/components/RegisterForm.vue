@@ -135,6 +135,7 @@
 	import request from 'superagent'
 	import vSelect from 'vue-multiselect'
 	import Options from '../utils/Options'
+	import config from '../utils/Config'
 
 	export default {
 		components: {
@@ -181,7 +182,7 @@
 
 				// Send HTTP request
 				request
-					.post('/api/v1/user')
+					.post(config.baseUrl + '/api/v1/user')
 					.send({ user: this.user })
 					.then((success) => {
 						this.$router.push({ name: 'login' })

@@ -71,6 +71,7 @@ class User {
 		return result
 	}
 
+	//TODO: FINISH/FIX THIS
 	static * update(db, user) {
 		let data = {}
 

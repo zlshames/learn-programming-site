@@ -10,18 +10,7 @@ class Auth {
 		let user = yield db('users')
 			.select()
 			.where('email', email)
-			.first([
-				'id',
-				'first_name',
-				'last_name',
-				'email',
-				'position',
-				'field',
-				'skill_level',
-				'password',
-				'api_token',
-				'token_expiration'
-			])
+			.first()
 			.then(row => { return row })
 			.catch(error => { return null })
 
@@ -60,7 +49,8 @@ class Auth {
 				email: user.email,
 				position: user.position,
 				field: user.field,
-				skillLevel: user.skill_level
+				skillLevel: user.skill_level,
+				isAdmin: user.is_admin
 			}
 		})
 	}
