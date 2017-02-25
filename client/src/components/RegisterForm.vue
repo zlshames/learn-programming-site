@@ -188,6 +188,7 @@
 						this.$router.push({ name: 'login' })
 					})
 					.catch((error) => {
+						console.log(error)
 						this.handleErrors(error)
 				})
 			},
