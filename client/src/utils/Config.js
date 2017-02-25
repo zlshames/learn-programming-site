@@ -1,4 +1,4 @@
 module.exports = {
-	baseUrl: 'http://learn-programming.club'
+	baseUrl: ''
 	//baseUrl: 'http://localhost:3000'
 }
