@@ -181,16 +181,13 @@
 				this.user.skillLevel = this.user.skillLevel.toLowerCase()
 
 				// Send HTTP request
-				console.log("base: " + config.baseUrl)
 				request
 					.post(config.baseUrl + '/api/v1/user')
 					.send({ user: this.user })
 					.then((success) => {
-						console.log(success)
 						this.$router.push({ name: 'login' })
 					})
 					.catch((error) => {
-						console.log(error)
 						this.handleErrors(error)
 				})
 			},
