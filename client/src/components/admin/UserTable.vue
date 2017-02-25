@@ -23,25 +23,34 @@
 			</div>
 		</div>
 
-		<nav aria-label="Page navigation example">
-			<ul class="pagination">
-				<li class="page-item">
-					<a class="page-link" @click="changePage(currentPage - 1)" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-						<span class="sr-only">Previous</span>
-					</a>
-				</li>
-				<li class="page-item" v-for="n in pages">
-					<a class="page-link" @click="changePage(n)">{{ n }}</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" @click="changePage(currentPage + 1)" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-						<span class="sr-only">Next</span>
-					</a>
-				</li>
-			</ul>
-		</nav>
+		<div class="table-footer">
+			<div>
+				<label>Results per page:</label>
+				<select v-model="perPage" >
+					<option v-for="n in 15" :value="n">{{ n }}</option>
+				</select>
+			</div>
+
+			<nav aria-label="Page navigation example">
+				<ul class="pagination">
+					<li class="page-item">
+						<a class="page-link" @click="changePage(currentPage - 1)" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+							<span class="sr-only">Previous</span>
+						</a>
+					</li>
+					<li class="page-item" v-for="n in pages">
+						<a class="page-link" @click="changePage(n)">{{ n }}</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" @click="changePage(currentPage + 1)" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+							<span class="sr-only">Next</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
 	</div>
 </template>
 
@@ -79,7 +88,12 @@ export default {
 	},
 	methods: {
 		changePage(pageNum) {
-			this.currentPage = pageNum
+			console.log("num pages: " + this.pages)
+			console.log("curr: " + this.currentPage)
+			console.log("change to: " + pageNum)
+			if (pageNum <= this.pages && pageNum > 0) {
+				this.currentPage = pageNum
+			}
 		}
 	}
 }
@@ -89,6 +103,13 @@ export default {
 	.delete {
 		height: 20px;
 		padding-top: -10px;
+	}
+
+	.table-footer {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
 	}
 
 	.header {

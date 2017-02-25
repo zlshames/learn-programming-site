@@ -18,6 +18,10 @@
 					:deleteUser="deleteUser"
 					:perPage="users.itemsPerPage">
 				</user-table>
+				<hr />
+				<h2>User Statistics</h2>
+				<br />
+				<user-statistics :users="users.all"></user-statistics>
 			</div>
 
 			<div class="box-container">
@@ -28,6 +32,10 @@
 					:deleteInvitee="deleteInvitee"
 					:perPage="invitees.itemsPerPage">
 				</invitee-table>
+				<hr />
+				<h2>Invitee Statistics</h2>
+				<br />
+				<invitee-statistics :invitees="invitees.all"></invitee-statistics>
 			</div>
 		</div>
 
@@ -40,6 +48,8 @@ import FooterTemplate from '../components/Footer.vue'
 import Navigation from '../components/Navigation.vue'
 import InviteeTable from '../components/admin/InviteeTable.vue'
 import UserTable from '../components/admin/UserTable.vue'
+import UserStatistics from '../components/admin/UserStatistics.vue'
+import InviteeStatistics from '../components/admin/InviteeStatistics.vue'
 
 import request from 'superagent'
 import storage from '../utils/Storage'
@@ -49,18 +59,20 @@ export default {
 	components: {
 		Navigation,
 		InviteeTable,
+		InviteeStatistics,
 		UserTable,
+		UserStatistics,
 		FooterTemplate
 	},
 	data() {
 		return {
 			invitees: {
 				all: [],
-				itemsPerPage: 3
+				itemsPerPage: 5
 			},
 			users: {
 				all: [],
-				itemsPerPage: 2
+				itemsPerPage: 5
 			},
 			error: '',
 			success: ''
