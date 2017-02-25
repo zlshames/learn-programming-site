@@ -51,7 +51,9 @@ export default {
 		let postUrl = ''
 
 		if (this.$route.name == 'profile') {
-			postUrl = '/' + this.$route.params.id
+			if (this.$route.params.id !== undefined && this.$route.params.id !== null) {
+				postUrl = '/' + this.$route.params.id
+			}			
 		}
 
 		request
