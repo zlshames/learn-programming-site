@@ -83,3 +83,13 @@ export default {
 	}
 }
 </script>
+
+<style scoped>
+	.navbar-brand {
+		color: #4B79A1;
+	}
+
+	.navbar-nav>li>a {
+		color: #283E51;
+	}
+</style>

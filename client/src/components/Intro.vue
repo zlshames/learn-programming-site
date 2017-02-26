@@ -8,13 +8,17 @@
 
 		<button
 			@click="$router.push({ name: 'invite' })"
-			class="btn btn-md btn-success btn-block m-top-25">
+			class="btn btn-md btn-primary btn-block m-top-25">
 			Join Now!
 		</button>
 	</div>
 </template>
 
 <style scoped>
+	.btn-primary {
+		background-color: #4B79A1;
+	}
+	
 	.box-container {
 		border-radius: 5px;
 		border: 1px solid rgba(0,0,0,0.8);

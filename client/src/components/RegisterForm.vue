@@ -9,21 +9,19 @@
 
 				<form class="form-horizontal" novalidate v-on:submit.prevent="submitForm">
 					<div v-bind:class="['form-group', (errors.firstName !== null) ? 'has-error' : '']">
-						<label for="firstName" class="col-md-4 control-label">First Name</label>
-
-						<div class="col-md-6">
+						<div class="label-input">
+							<label for="firstName" class="control-label">First Name</label>
 							<input id="firstName" type="text" class="form-control" v-model="user.firstName" required autofocus>
 
 							<span v-if="errors.firstName !== null" class="help-block">
 								<strong>{{ errors.firstName }}</strong>
-							 </span>
+							</span>
 						</div>
 					</div>
 
 					<div v-bind:class="['form-group', (errors.lastName !== null) ? 'has-error' : '']">
-						<label for="lastName" class="col-md-4 control-label">Last Name</label>
-
-						<div class="col-md-6">
+						<div class="label-input">
+							<label for="lastName" class="control-label">Last Name</label>
 							<input id="lastName" type="text" class="form-control" v-model="user.lastName" required autofocus>
 
 							<span v-if="errors.lastName !== null" class="help-block">
@@ -33,9 +31,8 @@
 					</div>
 
 					<div v-bind:class="['form-group', (errors.email !== null) ? 'has-error' : '']">
-						<label for="email" class="col-md-4 control-label">Email</label>
-
-						<div class="col-md-6">
+						<div class="label-input">
+							<label for="email" class="control-label">Email</label>
 							<input id="email" type="email" class="form-control" v-model="user.email" required>
 
 							<span v-if="errors.email !== null" class="help-block">
@@ -45,9 +42,8 @@
 					</div>
 
 					<div v-bind:class="['form-group', (errors.password !== null) ? 'has-error' : '']">
-						<label for="password" class="col-md-4 control-label">Password</label>
-
-						<div class="col-md-6">
+						<div class="label-input">
+							<label for="password" class="control-label">Password</label>
 							<input id="password" type="password" class="form-control" v-model="user.password" required>
 
 							<span v-if="errors.password !== null" class="help-block">
@@ -57,9 +53,8 @@
 					</div>
 
 					<div v-bind:class="['form-group', (errors.confirmation !== null) ? 'has-error' : '']">
-						<label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-						<div class="col-md-6">
+						<div class="label-input">
+							<label for="password-confirm" class="control-label">Confirm Password</label>
 							<input id="password-confirm" type="password" class="form-control" v-model="user.confirmation" required>
 
 							<span v-if="errors.confirmation !== null" class="help-block">
@@ -70,8 +65,8 @@
 
 					<div class="flex-row">
 						<div v-bind:class="['form-group', (errors.field !== null) ? 'has-error' : '']">
-							<label for="field" class="col-md-4 control-label">Field</label>
-							<div class="col-md-6">
+							<div class="label-input">
+								<label for="field" class="control-label">Field</label>
 								<v-select
 									:options="fields"
 									:show-labels="false"
@@ -86,8 +81,8 @@
 						</div>
 
 						<div v-bind:class="['form-group', (errors.position !== null) ? 'has-error' : '']">
-							<label for="position" class="col-md-4 control-label">Position</label>
-							<div class="col-md-6">
+							<div class="label-input">
+								<label for="position" class="control-label">Position</label>
 								<v-select
 									:options="positions"
 									:show-labels="false"
@@ -102,8 +97,8 @@
 						</div>
 
 						<div v-bind:class="['form-group', (errors.skillLevel !== null) ? 'has-error' : '']">
-							<label for="skillLevel" class="col-md-4 control-label">Skill Level</label>
-							<div class="col-md-6">
+							<div class="label-input">
+								<label for="skillLevel" class="control-label">Skill Level</label>
 								<v-select
 									:options="skillLevels"
 									:show-labels="false"
@@ -119,7 +114,7 @@
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-6 col-md-offset-4">
+						<div style="margin-left: 15px;">
 							<button type="submit" class="btn btn-primary">
 								Register
 							</button>
@@ -268,6 +263,10 @@
 </script>
 
 <style scoped>
+	.form-group {
+		margin-bottom: 0px;
+	}
+	
 	.flex-row {
 		display: flex;
 		justify-content: space-between;

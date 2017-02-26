@@ -9,9 +9,8 @@
 
 				<form class="form-horizontal" novalidate v-on:submit.prevent="submitForm">
 					<div v-bind:class="['form-group', (errors.email !== null) ? 'has-error' : '']">
-						<label for="email" class="col-md-4 control-label">Email</label>
-
-						<div class="col-md-6">
+						<div class="label-input">
+							<label for="email" class="control-label">Email</label>
 							<input id="email" type="email" class="form-control" v-model="email" required>
 
 							<span v-if="errors.email !== null" class="help-block">
@@ -21,9 +20,8 @@
 					</div>
 
 					<div v-bind:class="['form-group', (errors.password !== null) ? 'has-error' : '']">
-						<label for="password" class="col-md-4 control-label">Password</label>
-
-						<div class="col-md-6">
+						<div class="label-input">
+							<label for="password" class="control-label">Password</label>
 							<input id="password" type="password" class="form-control" v-model="password" required>
 
 							<span v-if="errors.password !== null" class="help-block">
@@ -33,7 +31,7 @@
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-6 col-md-offset-4">
+						<div style="margin-left: 10px; margin-top: 5px;">
 							<button type="submit" class="btn btn-primary">
 								Login
 							</button>
@@ -135,6 +133,10 @@
 </script>
 
 <style scoped>
+	.form-group {
+		margin-bottom: 0px;
+	}
+
 	.flex-row {
 		display: flex;
 		justify-content: space-between;

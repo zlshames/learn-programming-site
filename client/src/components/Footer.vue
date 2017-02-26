@@ -10,6 +10,7 @@
 
 <style scoped>
 	p {
+		color: #4B79A1;
 		text-align: center;
 		margin-top: 1.5em;
 	}

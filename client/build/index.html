@@ -7,22 +7,26 @@
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
 
 		<style>
-			body {
+			html, body {
+				background: #4B79A1; /* fallback for old browsers */
+				background: -webkit-linear-gradient(to bottom, #4B79A1 , #283E51); /* Chrome 10-25, Safari 5.1-6 */
+				background: linear-gradient(to bottom, #4B79A1 , #283E51); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 				height: 100%;
-			}
-
-			#app {
-				background: url('/assets/img/background.jpg') no-repeat;
-				background-size: cover;
-				background-position: center;
-				height: 100%;
-				z-index: -999;
+				width: 100%;
 			}
 
 			.page-container {
 				padding-top: 100px;
 				padding-bottom: 100px;
 				z-index: 100;
+			}
+
+			.label-input {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				justify-content: space-between;
+				margin: 10px;
 			}
 		</style>
 
@@ -34,5 +38,6 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
+		<script src="https://cdn.jsdelivr.net/vue.multiselect/1.1.4/vue-multiselect.min.js"></script>
 	</body>
 </html>
