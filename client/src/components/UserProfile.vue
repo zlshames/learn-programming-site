@@ -1,6 +1,6 @@
 <template>
 	<div class="box-container">
-		<h2>Proile Information</h2>
+		<h2>Profile Information</h2>
 		<br />
 		<p>{{ info.id }}</p>
 		<p>{{ info.firstName }}</p>
