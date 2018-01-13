@@ -22,19 +22,19 @@
 					<p class="help-block" v-if="errors.email !== null">{{ errors.email }}</p>
 				</div>
 				<div class="row">
-					<div class="form-group col-xs-4" :class="[errors.position !== null ? 'has-error' : '']">
+					<div class="form-group col-xs-12 col-sm-4" :class="[errors.position !== null ? 'has-error' : '']">
 						<label for="position">Your position</label>
 						<select v-model="invitee.position" name="position" class="form-control" required>
 							<option v-for="position in positions" :value="position">{{ position }}</option>
 						</select>
 					</div>
-					<div class="form-group col-xs-4" :class="[errors.field !== null ? 'has-error' : '']">
+					<div class="form-group col-xs-12 col-sm-4" :class="[errors.field !== null ? 'has-error' : '']">
 						<label for="field">Your field</label>
 						<select v-model="invitee.field" name="field" class="form-control" required>
 							<option v-for="field in fields" :value="field">{{ field }}</option>
 						</select>
 					</div>
-					<div class="form-group col-xs-4" :class="[errors.skillLevel !== null ? 'has-error' : '']">
+					<div class="form-group col-xs-12 col-sm-4" :class="[errors.skillLevel !== null ? 'has-error' : '']">
 						<label for="skillLevel">Your skill level</label>
 						<select v-model="invitee.skillLevel" name="skillLevel" class="form-control" required>
 							<option v-for="level in skillLevels" :value="level">{{ level }}</option>
@@ -188,7 +188,8 @@ export default {
 		padding: 20px;
 		background: white;
 		box-shadow: 0 3px 5px rgba(0,0,0,0.2);
-		width: 450px;
+    max-width: 450px;
+    width: 100%;
 		margin: 0 auto;
 	}
 

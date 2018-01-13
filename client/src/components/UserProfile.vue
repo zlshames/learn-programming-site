@@ -29,7 +29,8 @@ export default {
 		padding: 20px;
 		background: white;
 		box-shadow: 0 3px 5px rgba(0,0,0,0.2);
-		width: 450px;
+    max-width: 450px;
+    width: 100%;
 		margin: 0 auto;
 	}
 </style>

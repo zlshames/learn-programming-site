@@ -18,7 +18,7 @@
 	.btn-primary {
 		background-color: #4B79A1;
 	}
-	
+
 	.box-container {
 		border-radius: 5px;
 		border: 1px solid rgba(0,0,0,0.8);
@@ -26,7 +26,8 @@
 		background: white;
 		box-shadow: 0 3px 5px rgba(0,0,0,0.2);
 		text-align: center;
-		width: 400px;
+		max-width: 400px;
+    width: 100%;
 		margin: 0 auto;
 	}
 </style>
