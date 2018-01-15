@@ -2,21 +2,17 @@
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-
+    	<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
 
 		<style>
-			body {
+			html, body {
+				background: #4B79A1; /* fallback for old browsers */
+				background: -webkit-linear-gradient(to bottom, #4B79A1 , #283E51); /* Chrome 10-25, Safari 5.1-6 */
+				background: linear-gradient(to bottom, #4B79A1 , #283E51); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 				height: 100%;
-			}
-
-			#app {
-				background: url('/assets/img/background.jpg') no-repeat;
-				background-size: cover;
-				background-position: center;
-				height: 100%;
-				z-index: -999;
+				width: 100%;
 			}
 
 			.page-container {
@@ -24,15 +20,31 @@
 				padding-bottom: 100px;
 				z-index: 100;
 			}
+
+			.label-input {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				justify-content: space-between;
+				margin: 10px;
+			}
+
+			@media only screen and (max-width: 768px) {
+				.box-container {
+					width: 95% !important;
+					margin-top: -40px !important;
+				}
+			}
 		</style>
 
 		<title>Learn Programming Club</title>
-	<link href="/styles.efa14fcc.css" rel="stylesheet"></head>
+	<link href="/styles.93189313.css" rel="stylesheet"></head>
 	<body>
 		<div id="app"></div>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
-	<script type="text/javascript" src="/vendor.d6d4b45d.js"></script><script type="text/javascript" src="/client.e47b7bc7.js"></script></body>
+		<script src="https://cdn.jsdelivr.net/vue.multiselect/1.1.4/vue-multiselect.min.js"></script>
+	<script type="text/javascript" src="/vendor.d0a390a1.js"></script><script type="text/javascript" src="/client.20a82246.js"></script></body>
 </html>

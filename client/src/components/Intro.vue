@@ -14,7 +14,7 @@
 	</div>
 </template>
 
-<style scoped>
+<style>
 	.btn-primary {
 		background-color: #4B79A1;
 	}
@@ -27,7 +27,7 @@
 		box-shadow: 0 3px 5px rgba(0,0,0,0.2);
 		text-align: center;
 		max-width: 400px;
-    width: 100%;
+		width: 100%;
 		margin: 0 auto;
 	}
 </style>
